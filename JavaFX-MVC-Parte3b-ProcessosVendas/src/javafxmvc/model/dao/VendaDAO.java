@@ -44,7 +44,7 @@ public class VendaDAO {
     }
 
     public boolean alterar(Venda venda) {
-        String sql = "UPDATE clientes SET data=?, valor=?, pago=?, cdCliente=? WHERE cdVenda=?";
+        String sql = "UPDATE vendas SET data=?, valor=?, pago=?, cdCliente=? WHERE cdVenda=?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setDate(1, Date.valueOf(venda.getData()));
