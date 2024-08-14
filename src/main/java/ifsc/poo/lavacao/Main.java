@@ -1,4 +1,4 @@
-package javafxmvc;
+package ifsc.poo.lavacao;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

@@ -1,54 +1,36 @@
 package ifsc.poo.lavacao.controller;
 
-import java.io.IOException;
-import java.net.URL;
-import java.sql.Connection;
-import java.util.List;
-import java.util.ResourceBundle;
+import ifsc.poo.lavacao.model.Cor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafxmvc.model.dao.ClienteDAO;
-import javafxmvc.model.domain.Cliente;
-import javafxmvc.model.database.Database;
-import javafxmvc.model.database.DatabaseFactory;
 
-public class FXMLAnchorPaneCadastrosClientesController implements Initializable {
+import java.io.IOException;
+import java.net.URL;
+import java.sql.Connection;
+import java.util.List;
+import java.util.ResourceBundle;
 
-    @FXML
-    private TableView<Cliente> tableViewClientes;
-    @FXML
-    private TableColumn<Cliente, String> tableColumnClienteNome;
-    @FXML
-    private TableColumn<Cliente, String> tableColumnClienteCPF;
+public class FXMLAnchorPaneCadastroCorController implements Initializable {
+
+
+    // Select de Cores
+
     @FXML
     private Button buttonInserir;
-    @FXML
-    private Button buttonAlterar;
-    @FXML
-    private Button buttonRemover;
-    @FXML
-    private Label labelClienteCodigo;   
-    @FXML
-    private Label labelClienteNome;
-    @FXML
-    private Label labelClienteCPF;
-    @FXML
-    private Label labelClienteTelefone;
 
-    private List<Cliente> listClientes;
-    private ObservableList<Cliente> observableListClientes;
+    @FXML
+    private Label labelCorNome;
+
+    private List<Cor> listCores;
+    private ObservableList<Cor> observableListCor;
 
     //Atributos para manipulação de Banco de Dados
     private final Database database = DatabaseFactory.getDatabase("postgresql");
@@ -58,7 +40,7 @@ public class FXMLAnchorPaneCadastrosClientesController implements Initializable 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         clienteDAO.setConnection (connection);
-        
+
         carregarTableViewClientes();
 
         // Limpando a exibição dos detalhes do cliente
@@ -140,13 +122,13 @@ public class FXMLAnchorPaneCadastrosClientesController implements Initializable 
         // Criando um Estágio de Diálogo (Stage Dialog)
         Stage dialogStage = new Stage();
         dialogStage.setTitle("Cadastro de Clientes");
-        //Especifica a modalidade para esta fase . Isso deve ser feito antes de fazer o estágio visível. A modalidade pode ser: Modality.NONE , Modality.WINDOW_MODAL , ou Modality.APPLICATION_MODAL 
+        //Especifica a modalidade para esta fase . Isso deve ser feito antes de fazer o estágio visível. A modalidade pode ser: Modality.NONE , Modality.WINDOW_MODAL , ou Modality.APPLICATION_MODAL
         //dialogStage.initModality(Modality.WINDOW_MODAL);//WINDOW_MODAL (possibilita minimizar)
-        
+
         //Especifica a janela do proprietário para esta página, ou null para um nível superior.
         //dialogStage.initOwner(null); //null deixa a Tela Principal livre para ser movida
         //dialogStage.initOwner(this.tableViewClientes.getScene().getWindow()); //deixa a tela de Preenchimento dos dados como prioritária
-        
+
         Scene scene = new Scene(page);
         dialogStage.setScene(scene);
 
@@ -157,9 +139,9 @@ public class FXMLAnchorPaneCadastrosClientesController implements Initializable 
 
         // Mostra o Dialog e espera até que o usuário o feche
         dialogStage.setFocused(true);
-        
+
         dialogStage.showAndWait();
-        
+
 
         return controller.isButtonConfirmarClicked();
 

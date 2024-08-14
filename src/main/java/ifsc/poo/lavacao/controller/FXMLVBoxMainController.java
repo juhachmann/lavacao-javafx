@@ -1,4 +1,4 @@
-package javafxmvc.controller;
+package ifsc.poo.lavacao.controller;
 
 import java.io.IOException;
 import java.net.URL;
