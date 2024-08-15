@@ -62,7 +62,7 @@ class VeiculoDAO extends DAO<Veiculo> {
     }
 
 
-    // TODO Decidir o que fazer em relação a estes JOINs!
+    // TODO: Descobrir como testar adequadamente estes métodos DAO com o banco de dados
     @Override
     public List<Veiculo> getAll() {
         String sql = "SELECT v.id as vid, v.placa as vplaca, v.observacoes as vobservacoes, " +
@@ -182,7 +182,6 @@ class VeiculoDAO extends DAO<Veiculo> {
         veiculo.setPlaca(resultado.getString("vplaca"));
         veiculo.setObservacoes(resultado.getString("vobservacoes"));
 
-        // TODO Checar o uso de alias nas queries SQL e como fazer para conseguir usar o método correto
         // Cliente
         Cliente cliente = clienteDAO.mapToCliente(resultado, "c");
 

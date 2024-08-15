@@ -6,7 +6,7 @@ import ifsc.poo.lavacao.model.exceptions.ExceptionLavacao;
 import java.time.LocalDate;
 import java.util.*;
 
-// TODO Limpar isso aqui (separar a validação e ver o jeito certo de implementar o Builder)
+// TODO: (não urgente) Limpar isso aqui (separar a validação e ver o jeito certo de implementar o Builder)
 // Ver: https://howtodoinjava.com/design-patterns/creational/builder-pattern-in-java/
 
 public abstract class Cliente implements ICliente {
@@ -85,9 +85,7 @@ public abstract class Cliente implements ICliente {
      * Para adicionar ou remover veículos de um Cliente, utilize os métodos fornecidos.
      * @return nova lista com cópia dos objetos Veiculo
      */
-    // TODO checar a performance disso, parece que tá horrível...
     // Itera usando esse stream, aí cria lista, aí cria um ArrayList, aff....
-    // TODO Estudar mais sobre Stream e Collections do Java
     public List<Veiculo> getVeiculos() {
         var list =  veiculos.stream()
             .map(v -> {

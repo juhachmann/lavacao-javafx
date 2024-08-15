@@ -58,7 +58,7 @@ class OrdemDeServicoDAO extends DAO<OrdemDeServico> {
     }
 
 
-    // Todo: pegar relações
+    // TODO: Pensar nos dados relacionais que devem ser retornados do banco para formar os JOINs
     @Override
     public List<OrdemDeServico> getAll() {
         String sql = "SELECT * FROM os;";
@@ -124,7 +124,7 @@ class OrdemDeServicoDAO extends DAO<OrdemDeServico> {
         }
     }
 
-    // ToDO: ver a questão do Total!
+    // TODO: (com Marcos) Esclarecer se o Valor Total da OS fica salvo no banco de dados ou é um valor "derivado", que sempre será recalculado
     private OrdemDeServico mapToOS(ResultSet resultado) throws SQLException {
         OrdemDeServico os = new OrdemDeServico();
         os.setNumero(resultado.getInt("numero"));

@@ -47,7 +47,6 @@ public class PessoaJuridica extends Cliente{
         );
     }
 
-    // TODO Pesquisar mais sobre StringBuilder
     @Override
     public String getDados(String observacao) {
         StringBuilder stringBuilder = new StringBuilder();

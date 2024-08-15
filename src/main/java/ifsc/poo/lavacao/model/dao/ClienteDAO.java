@@ -17,7 +17,7 @@ class ClienteDAO extends DAO<Cliente> {
     }
 
 
-    // TODO Transaction para salvar cliente E pontuação
+    // TODO: Descobrir como se faz uma transaction para o caso de salvar cliente E sua pontuação ao mesmo tempo
     @Override
     public boolean create(Cliente cliente) {
         String sql = "INSERT INTO clientes " +
