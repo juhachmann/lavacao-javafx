@@ -1,6 +1,5 @@
 package ifsc.poo.lavacao.model;
 
-import ifsc.poo.lavacao.model.dao.DAO;
 import ifsc.poo.lavacao.model.exceptions.ExceptionLavacao;
 
 import java.time.LocalDate;

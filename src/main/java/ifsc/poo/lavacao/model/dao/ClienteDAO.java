@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-class ClienteDAO extends DAO<Cliente> {
+class ClienteDAO extends ACrudDAO<Cliente> {
     
     public ClienteDAO(Connection connection) {
         super(connection);

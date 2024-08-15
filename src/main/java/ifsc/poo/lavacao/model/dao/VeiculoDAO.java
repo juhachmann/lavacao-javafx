@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-class VeiculoDAO extends DAO<Veiculo> {
+class VeiculoDAO extends ACrudDAO<Veiculo> {
 
     private ClienteDAO clienteDAO;
 

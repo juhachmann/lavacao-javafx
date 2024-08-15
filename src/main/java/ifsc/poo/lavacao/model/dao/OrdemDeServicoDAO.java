@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-class OrdemDeServicoDAO extends DAO<OrdemDeServico> {
+class OrdemDeServicoDAO extends ACrudDAO<OrdemDeServico> {
 
     public OrdemDeServicoDAO(Connection connection) {
         super(connection);

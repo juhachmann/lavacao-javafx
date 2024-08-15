@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-class ServicoDAO extends DAO<Servico> {
+class ServicoDAO extends ACrudDAO<Servico> {
 
     public ServicoDAO(Connection connection) {
         super(connection);

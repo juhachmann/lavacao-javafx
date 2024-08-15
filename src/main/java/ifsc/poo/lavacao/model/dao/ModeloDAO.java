@@ -14,7 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class ModeloDAO extends DAO<Modelo> {
+public class ModeloDAO extends ACrudDAO<Modelo> {
 
     public ModeloDAO(Connection connection) {
         super(connection);

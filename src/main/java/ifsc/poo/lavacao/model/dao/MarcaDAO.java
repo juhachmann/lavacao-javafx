@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class MarcaDAO extends DAO<Marca> {
+public class MarcaDAO extends ACrudDAO<Marca> {
 
     public MarcaDAO(Connection connection) {
         super(connection);

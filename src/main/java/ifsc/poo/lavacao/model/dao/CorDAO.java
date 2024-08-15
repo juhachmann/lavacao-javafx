@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class CorDAO extends DAO<Cor> {
+public class CorDAO extends ACrudDAO<Cor> {
 
     public CorDAO(Connection connection) {
         super(connection);
