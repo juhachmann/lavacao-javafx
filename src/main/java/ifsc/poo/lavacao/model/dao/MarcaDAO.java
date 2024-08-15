@@ -38,8 +38,8 @@ public class MarcaDAO extends DAO<Marca> {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, marca.getNome());
             stmt.setInt(2, marca.getId());
-            return stmt.execute(); // TODO ver se pode mudar esse trem!
-
+            stmt.execute();
+            return true;
         } catch (SQLException ex) {
             Logger.getLogger(MarcaDAO.class.getName()).log(Level.SEVERE, null, ex);
             return false;
@@ -79,7 +79,6 @@ public class MarcaDAO extends DAO<Marca> {
         return null;
     }
 
-    @Override
     public List<Marca> getByName(String name) {
         String sql = "SELECT * FROM marcas WHERE nome LIKE ?;";
         List<Marca> retorno = new ArrayList<>();

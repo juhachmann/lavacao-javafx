@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import ifsc.poo.lavacao.model.database.Database;
+import ifsc.poo.lavacao.model.database.DatabaseFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -26,25 +29,17 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafxmvc.model.dao.ItemDeVendaDAO;
-import javafxmvc.model.dao.ProdutoDAO;
-import javafxmvc.model.dao.VendaDAO;
-import javafxmvc.model.database.Database;
-import javafxmvc.model.database.DatabaseFactory;
-import javafxmvc.model.domain.ItemDeVenda;
-import javafxmvc.model.domain.Produto;
-import javafxmvc.model.domain.Venda;
 
 public class FXMLAnchorPaneProcessosVendasController implements Initializable {
 
     @FXML
-    private TableView<Venda> tableViewVendas;
+    private TableView<String> tableViewVendas;
     @FXML
-    private TableColumn<Venda, Integer> tableColumnVendaCodigo;
+    private TableColumn<String, Integer> tableColumnVendaCodigo;
     @FXML
-    private TableColumn<Venda, Date> tableColumnVendaData;
+    private TableColumn<String, Date> tableColumnVendaData;
     @FXML
-    private TableColumn<Venda, Venda> tableColumnVendaCliente;
+    private TableColumn<String , String> tableColumnVendaCliente;
     @FXML
     private Button buttonInserir;
     @FXML
@@ -62,19 +57,17 @@ public class FXMLAnchorPaneProcessosVendasController implements Initializable {
     @FXML
     private Label labelVendaCliente;
 
-    private List<Venda> listVendas;
-    private ObservableList<Venda> observableListVendas;
+    private List<String> listVendas;
+    private ObservableList<String> observableListVendas;
 
     //Atributos para manipulação de Banco de Dados
-    private final Database database = DatabaseFactory.getDatabase("postgresql");
-    private final Connection connection = database.conectar();
-    private final VendaDAO vendaDAO = new VendaDAO();
-    private final ItemDeVendaDAO itemDeVendaDAO = new ItemDeVendaDAO();
-    private final ProdutoDAO produtoDAO = new ProdutoDAO();
+    private final Database database = DatabaseFactory.getConnection("mysql");
+    private final Connection connection = database.connect();
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        vendaDAO.setConnection(connection);
+      //  vendaDAO.setConnection(connection);
 
         carregarTableViewVendas();
 
@@ -91,19 +84,19 @@ public class FXMLAnchorPaneProcessosVendasController implements Initializable {
         tableColumnVendaData.setCellValueFactory(new PropertyValueFactory<>("data"));
         tableColumnVendaCliente.setCellValueFactory(new PropertyValueFactory<>("cliente"));
 
-        listVendas = vendaDAO.listar();
+        //listVendas = vendaDAO.listar();
 
         observableListVendas = FXCollections.observableArrayList(listVendas);
         tableViewVendas.setItems(observableListVendas);
     }
 
-    public void selecionarItemTableViewVendas(Venda venda) {
+    public void selecionarItemTableViewVendas(String venda) {
         if (venda != null) {
-            labelVendaCodigo.setText(String.valueOf(venda.getCdVenda()));
-            labelVendaData.setText(String.valueOf(venda.getData().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
-            labelVendaValor.setText(String.format("%.2f", venda.getValor()));
-            labelVendaPago.setText(String.valueOf(venda.getPago()));
-            labelVendaCliente.setText(venda.getCliente().toString());
+//            labelVendaCodigo.setText(String.valueOf(venda.getCdVenda()));
+//            labelVendaData.setText(String.valueOf(venda.getData().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
+//            labelVendaValor.setText(String.format("%.2f", venda.getValor()));
+//            labelVendaPago.setText(String.valueOf(venda.getPago()));
+//            labelVendaCliente.setText(venda.getCliente().toString());
         } else {
             labelVendaCodigo.setText("");
             labelVendaData.setText("");
@@ -115,26 +108,26 @@ public class FXMLAnchorPaneProcessosVendasController implements Initializable {
 
     @FXML
     public void handleButtonInserir() throws IOException {
-        Venda venda = new Venda();
-        List<ItemDeVenda> listItensDeVenda = new ArrayList<>();
-        venda.setItensDeVenda(listItensDeVenda);
+        String venda = new String();
+        List<String> listItensDeVenda = new ArrayList<>();
+      //  venda.setItensDeVenda(listItensDeVenda);
         boolean buttonConfirmarClicked = showFXMLAnchorPaneProcessosVendasDialog(venda);
         if (buttonConfirmarClicked) {
             try {
                 connection.setAutoCommit(false);
-                vendaDAO.setConnection(connection);
-                vendaDAO.inserir(venda);
-                itemDeVendaDAO.setConnection(connection);
-                produtoDAO.setConnection(connection);
-                for (ItemDeVenda listItemDeVenda : venda.getItensDeVenda()) {
-                    Produto produto = listItemDeVenda.getProduto();
-                    listItemDeVenda.setVenda(vendaDAO.buscarUltimaVenda());
-                    itemDeVendaDAO.inserir(listItemDeVenda);
-                    produto.setQuantidade(produto.getQuantidade() - listItemDeVenda.getQuantidade());
-                    produtoDAO.alterar(produto);
-                }
-                connection.commit();
-                carregarTableViewVendas();
+//                vendaDAO.setConnection(connection);
+//                vendaDAO.inserir(venda);
+//                itemDeVendaDAO.setConnection(connection);
+//                produtoDAO.setConnection(connection);
+//                for (ItemDeVenda listItemDeVenda : venda.getItensDeVenda()) {
+//                    Produto produto = listItemDeVenda.getProduto();
+//                    listItemDeVenda.setVenda(vendaDAO.buscarUltimaVenda());
+//                    itemDeVendaDAO.inserir(listItemDeVenda);
+//                    produto.setQuantidade(produto.getQuantidade() - listItemDeVenda.getQuantidade());
+//                    produtoDAO.alterar(produto);
+//                }
+//                connection.commit();
+//                carregarTableViewVendas();
             } catch (SQLException ex) {
                 try {
                     connection.rollback();
@@ -153,29 +146,29 @@ public class FXMLAnchorPaneProcessosVendasController implements Initializable {
 
     @FXML
     public void handleButtonRemover() throws IOException, SQLException {
-        Venda venda = tableViewVendas.getSelectionModel().getSelectedItem();
-        if (venda != null) {
-            connection.setAutoCommit(false);
-            vendaDAO.setConnection(connection);
-            itemDeVendaDAO.setConnection(connection);
-            produtoDAO.setConnection(connection);
-            for (ItemDeVenda listItemDeVenda : venda.getItensDeVenda()) {
-                Produto produto = listItemDeVenda.getProduto();
-                produto.setQuantidade(produto.getQuantidade() + listItemDeVenda.getQuantidade());
-                produtoDAO.alterar(produto);
-                itemDeVendaDAO.remover(listItemDeVenda);
-            }
-            vendaDAO.remover(venda);
-            connection.commit();
-            carregarTableViewVendas();
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Por favor, escolha uma venda na Tabela!");
-            alert.show();
-        }
+//        Venda venda = tableViewVendas.getSelectionModel().getSelectedItem();
+//        if (venda != null) {
+//            connection.setAutoCommit(false);
+//            vendaDAO.setConnection(connection);
+//            itemDeVendaDAO.setConnection(connection);
+//            produtoDAO.setConnection(connection);
+//            for (ItemDeVenda listItemDeVenda : venda.getItensDeVenda()) {
+//                Produto produto = listItemDeVenda.getProduto();
+//                produto.setQuantidade(produto.getQuantidade() + listItemDeVenda.getQuantidade());
+//                produtoDAO.alterar(produto);
+//                itemDeVendaDAO.remover(listItemDeVenda);
+//            }
+//            vendaDAO.remover(venda);
+//            connection.commit();
+//            carregarTableViewVendas();
+//        } else {
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setContentText("Por favor, escolha uma venda na Tabela!");
+//            alert.show();
+//        }
     }
 
-    public boolean showFXMLAnchorPaneProcessosVendasDialog(Venda venda) throws IOException {
+    public boolean showFXMLAnchorPaneProcessosVendasDialog(String  venda) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(FXMLAnchorPaneProcessosVendasDialogController.class.getResource("/javafxmvc/view/FXMLAnchorPaneProcessosVendasDialog.fxml"));
         AnchorPane page = (AnchorPane) loader.load();
@@ -189,7 +182,7 @@ public class FXMLAnchorPaneProcessosVendasController implements Initializable {
         // Setando a Venda no Controller.
         FXMLAnchorPaneProcessosVendasDialogController controller = loader.getController();
         controller.setDialogStage(dialogStage);
-        controller.setVenda(venda);
+       // controller.setVenda(venda);
 
         // Mostra o Dialog e espera até que o usuário o feche
         dialogStage.showAndWait();

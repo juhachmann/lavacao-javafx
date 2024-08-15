@@ -21,7 +21,7 @@ public class PessoaJuridicaBuilder {
     }
 
     public PessoaJuridica build() {
-        PessoaJuridica pj = new PessoaJuridica(clienteBuilder.nome, clienteBuilder.email, clienteBuilder.celular, clienteBuilder.dataCadastro);
+        PessoaJuridica pj = new PessoaJuridica(clienteBuilder.id, clienteBuilder.nome, clienteBuilder.email, clienteBuilder.celular, clienteBuilder.dataCadastro);
         pj.setInscricaoEstadual(inscricaoEstadual);
         pj.setCnpj(cnpj);
         return pj;

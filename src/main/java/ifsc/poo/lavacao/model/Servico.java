@@ -5,6 +5,7 @@ public class Servico {
     private int id;
     private String descricao;
     private double valor;
+    private ECategoria categoria;
     private static int pontos;
 
     public int getId() {
@@ -29,6 +30,14 @@ public class Servico {
 
     public void setValor(double valor) {
         this.valor = valor;
+    }
+
+    public ECategoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(ECategoria categoria) {
+        this.categoria = categoria;
     }
 
     public static int getPontos() {

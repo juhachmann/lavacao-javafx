@@ -4,10 +4,18 @@ import java.time.LocalDate;
 
 public class ClienteBuilder {
 
+    int id;
     String nome;
     String email;
     String celular;
     LocalDate dataCadastro;
+
+    public ClienteBuilder setId(int id) {
+        if(id <= 0)
+            throw new IllegalArgumentException("Id não pode ser zero ou negativo");
+        this.id = id;
+        return this;
+    }
 
     public ClienteBuilder setNome(String nome) {
         if(nome == null || nome.isEmpty() || nome.isBlank())

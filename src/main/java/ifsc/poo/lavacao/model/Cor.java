@@ -6,6 +6,8 @@ public class Cor {
     private String nome;
     private final CorDTO locked = new CorDTO(this);
 
+    public Cor () {}
+
     public Cor(int id, String nome) {
         this.id = id;
         this.nome = nome;

@@ -1,5 +1,6 @@
 package ifsc.poo.lavacao.model;
 
+import ifsc.poo.lavacao.model.dao.DAO;
 import ifsc.poo.lavacao.model.exceptions.ExceptionLavacao;
 
 import java.time.LocalDate;
@@ -18,7 +19,8 @@ public abstract class Cliente implements ICliente {
     private Set<Veiculo> veiculos = new HashSet<>();
     private Pontuacao pontuacao = new Pontuacao();
 
-    Cliente(String nome, String email, String celular, LocalDate dataCadastro) {
+    public Cliente(int id, String nome, String email, String celular, LocalDate dataCadastro) {
+        this.setId(id);
         this.setNome(nome);
         this.setEmail(email);
         this.setCelular(celular);
@@ -34,8 +36,6 @@ public abstract class Cliente implements ICliente {
     }
 
     public void setId(int id) {
-        if(id <= 0)
-            throw new IllegalArgumentException("Id deve ser maior do que zero");
         this.id = id;
     }
 
@@ -65,10 +65,8 @@ public abstract class Cliente implements ICliente {
         this.celular = celular;
     }
 
-    // Por "segurança", retornar um objeto imutável
-    // Retorna uma String
-    public String getDataCadastro() {
-        return dataCadastro.toString();
+    public LocalDate getDataCadastro() {
+        return dataCadastro;
     }
 
     public void setDataCadastro(LocalDate dataCadastro) {

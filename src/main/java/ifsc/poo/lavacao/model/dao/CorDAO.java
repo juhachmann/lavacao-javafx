@@ -38,8 +38,8 @@ public class CorDAO extends DAO<Cor> {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, cor.getNome());
             stmt.setInt(2, cor.getId());
-            return stmt.execute(); // TODO ver se pode mudar esse trem!
-
+            stmt.execute();
+            return true;
         } catch (SQLException ex) {
             Logger.getLogger(CorDAO.class.getName()).log(Level.SEVERE, null, ex);
             return false;
@@ -79,7 +79,6 @@ public class CorDAO extends DAO<Cor> {
         return null;
     }
 
-    @Override
     public List<Cor> getByName(String name) {
         String sql = "SELECT * FROM cores WHERE nome LIKE ?;";
         List<Cor> retorno = new ArrayList<>();

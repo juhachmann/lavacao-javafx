@@ -12,6 +12,8 @@ public class Modelo {
     private ECategoria categoria = ECategoria.PADRAO;
     private final Motor motor = new Motor(ETipoCombustivel.GASOLINA);
 
+    public Modelo() {}
+
     public Modelo(String descricao, Marca marca) {
         this.descricao = descricao;
         setMarca(marca);

@@ -6,6 +6,8 @@ public class Marca {
     private String nome;
     private final MarcaDTO dto = new MarcaDTO(this);
 
+    public Marca() {}
+
     public Marca(int id, String nome) {
         this.id = id;
         this.nome = nome;

@@ -9,8 +9,8 @@ public class PessoaJuridica extends Cliente{
     private String cnpj;
     private String inscricaoEstadual;
 
-    PessoaJuridica(String nome, String email, String celular, LocalDate dataCadastro) {
-        super(nome, email, celular, dataCadastro);
+    public PessoaJuridica(int id, String nome, String email, String celular, LocalDate dataCadastro) {
+        super(id, nome, email, celular, dataCadastro);
     }
 
     public String getCnpj() {

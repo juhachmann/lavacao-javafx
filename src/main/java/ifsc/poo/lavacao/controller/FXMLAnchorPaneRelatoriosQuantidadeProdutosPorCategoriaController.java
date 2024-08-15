@@ -5,6 +5,9 @@ import java.sql.Connection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import ifsc.poo.lavacao.model.database.Database;
+import ifsc.poo.lavacao.model.database.DatabaseFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,12 +17,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafxmvc.model.dao.CategoriaDAO;
-import javafxmvc.model.dao.ProdutoDAO;
-import javafxmvc.model.database.Database;
-import javafxmvc.model.database.DatabaseFactory;
-import javafxmvc.model.domain.Categoria;
-import javafxmvc.model.domain.Produto;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -30,43 +27,43 @@ import net.sf.jasperreports.view.JasperViewer;
 public class FXMLAnchorPaneRelatoriosQuantidadeProdutosPorCategoriaController implements Initializable {
 
     @FXML
-    private TableView<Produto> tableViewProdutos;
+    private TableView<String> tableViewProdutos;
     @FXML
-    private TableColumn<Produto, Integer> tableColumnProdutoCodigo;
+    private TableColumn<String, Integer> tableColumnProdutoCodigo;
     @FXML
-    private TableColumn<Produto, String> tableColumnProdutoNome;
+    private TableColumn<String, String> tableColumnProdutoNome;
     @FXML
-    private TableColumn<Produto, Double> tableColumnProdutoPreco;
+    private TableColumn<String, Double> tableColumnProdutoPreco;
     @FXML
-    private TableColumn<Produto, Integer> tableColumnProdutoQuantidade;
+    private TableColumn<String, Integer> tableColumnProdutoQuantidade;
     @FXML
-    private TableColumn<Produto, Categoria> tableColumnProdutoCategoria;
+    private TableColumn<String, String> tableColumnProdutoCategoria;
     @FXML
     private Button buttonImprimir;
     @FXML
     private ComboBox comboBoxCategorias;
     
-    private List<Categoria> listCategorias;
-    private List<Produto> listProdutos;
-    private ObservableList<Categoria> observableListCategorias;
-    private ObservableList<Produto> observableListProdutos;
+    private List<String> listCategorias;
+    private List<String> listProdutos;
+    private ObservableList<String> observableListCategorias;
+    private ObservableList<String> observableListProdutos;
 
     //Atributos para manipulação de Banco de Dados
-    private final Database database = DatabaseFactory.getDatabase("postgresql");
-    private final Connection connection = database.conectar();
-    private final CategoriaDAO categoriaDAO = new CategoriaDAO();
-    private final ProdutoDAO produtoDAO = new ProdutoDAO();
+    private final Database database = DatabaseFactory.getConnection("mysql");
+    private final Connection connection = database.connect();
+ //   private final CategoriaDAO categoriaDAO = new CategoriaDAO();
+ //   private final ProdutoDAO produtoDAO = new ProdutoDAO();
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        categoriaDAO.setConnection(connection);
-        listCategorias = categoriaDAO.listar();
+  //      categoriaDAO.setConnection(connection);
+   //     listCategorias = categoriaDAO.listar();
         observableListCategorias = FXCollections.observableArrayList(listCategorias);
         comboBoxCategorias.setItems(observableListCategorias);
     }    
     
     public void carregarTableViewProdutos() {
-        produtoDAO.setConnection (connection);
+     //   produtoDAO.setConnection (connection);
         
         tableColumnProdutoCodigo.setCellValueFactory(new PropertyValueFactory<>("cdProduto"));
         tableColumnProdutoNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
@@ -74,8 +71,8 @@ public class FXMLAnchorPaneRelatoriosQuantidadeProdutosPorCategoriaController im
         tableColumnProdutoQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
         tableColumnProdutoCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
 
-        Categoria categoria = (Categoria)this.comboBoxCategorias.getSelectionModel().getSelectedItem();
-        listProdutos = produtoDAO.listarPorCategoria(categoria);
+     //   Categoria categoria = (Categoria)this.comboBoxCategorias.getSelectionModel().getSelectedItem();
+     //   listProdutos = produtoDAO.listarPorCategoria(categoria);
 
         observableListProdutos = FXCollections.observableArrayList(listProdutos);
         tableViewProdutos.setItems(observableListProdutos);
@@ -83,9 +80,9 @@ public class FXMLAnchorPaneRelatoriosQuantidadeProdutosPorCategoriaController im
     
     public void handleImprimir() throws JRException{
         HashMap filtro = new HashMap();
-        Categoria categoria = (Categoria)this.comboBoxCategorias.getSelectionModel().getSelectedItem();
+    //    Categoria categoria = (Categoria)this.comboBoxCategorias.getSelectionModel().getSelectedItem();
         
-        filtro.put("cdCategoria", categoria.getCdCategoria());
+    //    filtro.put("cdCategoria", categoria.getCdCategoria());
 
         URL url = getClass().getResource("/javafxmvc/relatorios/JAVAFXMVCRelatorioProdutosPorCategoria.jasper");
         JasperReport jasperReport = (JasperReport) JRLoader.loadObject(url);

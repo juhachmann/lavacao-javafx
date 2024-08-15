@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/src/main/java/ifsc/poo/lavacao/model/dao/ClienteDAO.java" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/ifsc/poo/lavacao/model/dao/CorDAO.java" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/ifsc/poo/lavacao/model/dao/MarcaDAO.java" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/ifsc/poo/lavacao/model/dao/ModeloDAO.java" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/ifsc/poo/lavacao/model/dao/OrdemDeServicoDAO.java" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/ifsc/poo/lavacao/model/dao/ServicoDAO.java" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/ifsc/poo/lavacao/model/dao/VeiculoDAO.java" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/db/ddl.sql" dialect="MySQL" />
   </component>
 </project>

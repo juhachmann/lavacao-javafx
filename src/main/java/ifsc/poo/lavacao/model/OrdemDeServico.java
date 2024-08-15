@@ -6,15 +6,28 @@ import java.util.List;
 
 public class OrdemDeServico {
 
-    private long numero;
+    private int numero;
     private double desconto;
     private Date agenda;
     private final List<ItemOS> items = new ArrayList<>();
     private Veiculo veiculo;
+    private EStatus status;
 
 
-    public long getNumero() {
+    public int getNumero() {
         return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
+    public EStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(EStatus status) {
+        this.status = status;
     }
 
     public double getTotal() {

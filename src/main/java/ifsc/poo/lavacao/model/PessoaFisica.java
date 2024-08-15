@@ -10,8 +10,8 @@ public class PessoaFisica extends Cliente{
     private String cpf;
     private LocalDate dataNascimento;
 
-    PessoaFisica(String nome, String email, String celular, LocalDate dataCadastro) {
-        super(nome, email, celular, dataCadastro);
+    public PessoaFisica(int id, String nome, String email, String celular, LocalDate dataCadastro) {
+        super(id, nome, email, celular, dataCadastro);
     }
 
     public String getCpf() {

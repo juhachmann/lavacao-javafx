@@ -5,6 +5,11 @@ import java.net.URL;
 import java.sql.Connection;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import ifsc.poo.lavacao.model.Cliente;
+import ifsc.poo.lavacao.model.PessoaFisica;
+import ifsc.poo.lavacao.model.database.Database;
+import ifsc.poo.lavacao.model.database.DatabaseFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -19,10 +24,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafxmvc.model.dao.ClienteDAO;
-import javafxmvc.model.domain.Cliente;
-import javafxmvc.model.database.Database;
-import javafxmvc.model.database.DatabaseFactory;
+
 
 public class FXMLAnchorPaneCadastrosClientesController implements Initializable {
 
@@ -51,13 +53,13 @@ public class FXMLAnchorPaneCadastrosClientesController implements Initializable 
     private ObservableList<Cliente> observableListClientes;
 
     //Atributos para manipulação de Banco de Dados
-    private final Database database = DatabaseFactory.getDatabase("postgresql");
-    private final Connection connection = database.conectar();
-    private final ClienteDAO clienteDAO = new ClienteDAO();
+    private final Database database = DatabaseFactory.getConnection("mysql");
+    private final Connection connection = database.connect();
+   // private final ClienteDAO clienteDAO = new ClienteDAO();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        clienteDAO.setConnection (connection);
+     //   clienteDAO.setConnection (connection);
         
         carregarTableViewClientes();
 
@@ -73,7 +75,7 @@ public class FXMLAnchorPaneCadastrosClientesController implements Initializable 
         tableColumnClienteNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         tableColumnClienteCPF.setCellValueFactory(new PropertyValueFactory<>("cpf"));
 
-        listClientes = clienteDAO.listar();
+       // listClientes = clienteDAO.listar();
 
         observableListClientes = FXCollections.observableArrayList(listClientes);
         tableViewClientes.setItems(observableListClientes);
@@ -81,10 +83,10 @@ public class FXMLAnchorPaneCadastrosClientesController implements Initializable 
 
     public void selecionarItemTableViewClientes(Cliente cliente) {
         if (cliente != null) {
-            labelClienteCodigo.setText(String.valueOf(cliente.getCdCliente()));
-            labelClienteNome.setText(cliente.getNome());
-            labelClienteCPF.setText(cliente.getCpf());
-            labelClienteTelefone.setText(cliente.getTelefone());
+//            labelClienteCodigo.setText(String.valueOf(cliente.getCdCliente()));
+//            labelClienteNome.setText(cliente.getNome());
+//            labelClienteCPF.setText(cliente.getCpf());
+//            labelClienteTelefone.setText(cliente.getTelefone());
         } else {
             labelClienteCodigo.setText("");
             labelClienteNome.setText("");
@@ -95,10 +97,10 @@ public class FXMLAnchorPaneCadastrosClientesController implements Initializable 
 
     @FXML
     public void handleButtonInserir() throws IOException {
-        Cliente cliente = new Cliente();
+        Cliente cliente = PessoaFisica.fromBuilder().pessoaFisica().build();
         boolean buttonConfirmarClicked = showFXMLAnchorPaneCadastrosClientesDialog(cliente);
         if (buttonConfirmarClicked) {
-            clienteDAO.inserir(cliente);
+      //      clienteDAO.inserir(cliente);
             carregarTableViewClientes();
         }
     }
@@ -109,7 +111,7 @@ public class FXMLAnchorPaneCadastrosClientesController implements Initializable 
         if (cliente != null) {
             boolean buttonConfirmarClicked = showFXMLAnchorPaneCadastrosClientesDialog(cliente);
             if (buttonConfirmarClicked) {
-                clienteDAO.alterar(cliente);
+        //        clienteDAO.alterar(cliente);
                 carregarTableViewClientes();
             }
         } else {
@@ -123,7 +125,7 @@ public class FXMLAnchorPaneCadastrosClientesController implements Initializable 
     public void handleButtonRemover() throws IOException {
         Cliente cliente = tableViewClientes.getSelectionModel().getSelectedItem();
         if (cliente != null) {
-            clienteDAO.remover(cliente);
+          //  clienteDAO.remover(cliente);
             carregarTableViewClientes();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -156,8 +158,8 @@ public class FXMLAnchorPaneCadastrosClientesController implements Initializable 
         controller.setCliente(cliente);
 
         // Mostra o Dialog e espera até que o usuário o feche
-        dialogStage.setFocused(true);
-        
+       // dialogStage.setFocused(true);
+
         dialogStage.showAndWait();
         
 

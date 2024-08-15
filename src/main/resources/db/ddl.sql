@@ -41,6 +41,7 @@ CREATE TABLE clientes (
   data_nascimento DATE,
   cnpj varchar(50),
   inscricao_estadual varchar(150),
+  tipo ENUM('PF', 'PJ') NOT NULL,
   CONSTRAINT pk_cliente PRIMARY KEY(id)
 ) engine = InnoDB;
 
@@ -82,6 +83,12 @@ CREATE TABLE items_os (
   CONSTRAINT fk_os_items_os FOREIGN KEY (os_id) REFERENCES os(numero)
 ) engine = InnoDB;
 
-
+CREATE TABLE pontuacao (
+    id int NOT NULL AUTO_INCREMENT,
+    quantidade int NOT NULL DEFAULT 0,
+    cliente_id int NOT NULL UNIQUE,
+    CONSTRAINT pk_pontuacao PRIMARY KEY (id),
+    CONSTRAINT fk_cliente_pontuacao FOREIGN KEY (cliente_id) REFERENCES clientes(id)
+) engine = InnoDB;
 
 

@@ -11,6 +11,8 @@ public class Veiculo {
     private Cor cor;
     private Cliente cliente;
 
+    public Veiculo() {}
+
     Veiculo(Cliente cliente, Modelo modelo, Cor cor) {
         setCliente(cliente);
         setModelo(modelo);

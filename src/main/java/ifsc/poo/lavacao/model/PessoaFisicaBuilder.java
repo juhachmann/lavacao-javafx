@@ -25,7 +25,7 @@ public class PessoaFisicaBuilder {
     }
 
     public PessoaFisica build() {
-        PessoaFisica pf =  new PessoaFisica(clienteBuilder.nome, clienteBuilder.email, clienteBuilder.celular, clienteBuilder.dataCadastro);
+        PessoaFisica pf =  new PessoaFisica(clienteBuilder.id, clienteBuilder.nome, clienteBuilder.email, clienteBuilder.celular, clienteBuilder.dataCadastro);
         pf.setCpf(cpf);
         pf.setDataNascimento(dataNascimento);
         return pf;
