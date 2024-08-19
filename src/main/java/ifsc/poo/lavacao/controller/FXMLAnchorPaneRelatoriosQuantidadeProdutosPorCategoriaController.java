@@ -89,7 +89,7 @@ public class FXMLAnchorPaneRelatoriosQuantidadeProdutosPorCategoriaController im
         
         filtro.put("cdCategoria", categoria.getCdCategoria());
 
-        URL url = Main.class.getResource("relatorios/relatorios/JAVAFXMVCRelatorioProdutosPorCategoria.jasper");
+        URL url = Main.class.getResource("relatorios/JAVAFXMVCRelatorioProdutosPorCategoria.jasper");
         JasperReport jasperReport = (JasperReport) JRLoader.loadObject(url);
 
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, filtro, connection);//null: caso não existam filtros

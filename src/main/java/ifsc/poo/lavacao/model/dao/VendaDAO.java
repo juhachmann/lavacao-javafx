@@ -134,7 +134,7 @@ public class VendaDAO {
     }
 
     public Venda buscarUltimaVenda() {
-        String sql = "SELECT max(cdVenda) FROM vendas";
+        String sql = "SELECT max(cdVenda) as max FROM vendas";
         Venda retorno = new Venda();
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
