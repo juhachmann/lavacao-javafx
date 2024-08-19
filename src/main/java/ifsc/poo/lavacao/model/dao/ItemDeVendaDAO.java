@@ -25,7 +25,7 @@ public class ItemDeVendaDAO {
     }
 
     public boolean inserir(ItemDeVenda itemDeVenda) {
-        String sql = "INSERT INTO itensdevenda(quantidade, valor, cdProduto, cdVenda) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO itensDeVenda(quantidade, valor, cdProduto, cdVenda) VALUES(?,?,?,?)";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setInt(1, itemDeVenda.getQuantidade());

@@ -72,7 +72,7 @@ public class FXMLAnchorPaneRelatoriosQuantidadeProdutosController implements Ini
     }
     
     public void handleImprimir() throws JRException{
-        URL url = Main.class.getResource("relatorios/relatorios/JAVAFXMVCRelatorioProdutos.jasper");
+        URL url = Main.class.getResource("relatorios/JAVAFXMVCRelatorioProdutos.jasper");
         JasperReport jasperReport = (JasperReport) JRLoader.loadObject(url);
 
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, connection);//null: caso não existam filtros
