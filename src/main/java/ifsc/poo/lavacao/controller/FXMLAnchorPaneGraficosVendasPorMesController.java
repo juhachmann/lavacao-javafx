@@ -6,9 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.ResourceBundle;
-
-import ifsc.poo.lavacao.model.database.Database;
-import ifsc.poo.lavacao.model.database.DatabaseFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,6 +14,9 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import ifsc.poo.lavacao.model.dao.VendaDAO;
+import ifsc.poo.lavacao.model.database.Database;
+import ifsc.poo.lavacao.model.database.DatabaseFactory;
 
 public class FXMLAnchorPaneGraficosVendasPorMesController implements Initializable {
 
@@ -32,9 +32,9 @@ public class FXMLAnchorPaneGraficosVendasPorMesController implements Initializab
     private ObservableList<String> observableListMeses = FXCollections.observableArrayList();
 
     //Atributos para manipulação de Banco de Dados
-    private final Database database = DatabaseFactory.getConnection("mysql");
-    private final Connection connection = database.connect();
- //   private final VendaDAO vendaDAO = new VendaDAO();
+    private final Database database = DatabaseFactory.getDatabase("mysql");
+    private final Connection connection = database.conectar();
+    private final VendaDAO vendaDAO = new VendaDAO();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -47,24 +47,24 @@ public class FXMLAnchorPaneGraficosVendasPorMesController implements Initializab
         // Associa os nomes de mês como categorias para o eixo horizontal.
         categoryAxis.setCategories(observableListMeses);
         
-   //     vendaDAO.setConnection(connection);
-     //   Map<Integer, ArrayList> dados = vendaDAO.listarQuantidadeVendasPorMes();
+        vendaDAO.setConnection(connection);
+        Map<Integer, ArrayList> dados = vendaDAO.listarQuantidadeVendasPorMes();
 
-//        for (Map.Entry<Integer, ArrayList> dadosItem : dados.entrySet()) {
-//            XYChart.Series<String, Integer> series = new XYChart.Series<>();
-//            series.setName(dadosItem.getKey().toString());
-//
-//            for (int i = 0; i < dadosItem.getValue().size(); i = i + 2) {
-//                String mes;
-//                Integer quantidade;
-//
-//                mes = retornaNomeMes((int) dadosItem.getValue().get(i));
-//                quantidade = (Integer) dadosItem.getValue().get(i + 1);
-//
-//                series.getData().add(new XYChart.Data<>(mes, quantidade));
-//            }
-//            barChart.getData().add(series);
-//        }
+        for (Map.Entry<Integer, ArrayList> dadosItem : dados.entrySet()) {
+            XYChart.Series<String, Integer> series = new XYChart.Series<>();
+            series.setName(dadosItem.getKey().toString());
+
+            for (int i = 0; i < dadosItem.getValue().size(); i = i + 2) {
+                String mes;
+                Integer quantidade;
+
+                mes = retornaNomeMes((int) dadosItem.getValue().get(i));
+                quantidade = (Integer) dadosItem.getValue().get(i + 1);
+
+                series.getData().add(new XYChart.Data<>(mes, quantidade));
+            }
+            barChart.getData().add(series);
+        }
         //barChart.getData().sorted();
         
         //ObservableList<String> list = categoryAxis.getCategories();

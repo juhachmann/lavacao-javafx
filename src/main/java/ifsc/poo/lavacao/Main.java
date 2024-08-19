@@ -9,21 +9,15 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class Main extends Application {
-    
+
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root;
-        var fxmlLoader = new FXMLLoader(Main.class.getResource("view/FXMLVBoxMain.fxml"));
-        try {
-            root = fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        Parent root = FXMLLoader.load(getClass().getResource("view/FXMLVBoxMain.fxml"));
 
         Scene scene = new Scene(root);
-        
+
         stage.setScene(scene);
-        stage.setTitle("Sistema de Lavação (JavaFX MVC)");
+        stage.setTitle("Sistema de Vendas (JavaFX MVC)");
         stage.setResizable(false);
         stage.show();
     }
@@ -33,39 +27,4 @@ public class Main extends Application {
     }
     
 }
-
-/* public class ImcApplication extends Application {
-
-    static Scene scene;
-
-    public static boolean darkMode = true;
-
-    @Override
-    public void start(Stage stage) {
-        Application.setUserAgentStylesheet(new NordDark().getUserAgentStylesheet());
-        stage.setTitle("Saúde Não Se Pesa!");
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public static void setRoot(String fxml) {
-        scene.setRoot(loadFXML(fxml));
-    }
-
-    private static Parent loadFXML(String fxml) {
-        var fxmlLoader = new FXMLLoader(ImcApplication.class.getResource(fxml));
-        try {
-            return fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static void main(String[] args)  {
-        String startingScene = "view/input-scene.fxml";
-        scene = new Scene(loadFXML(startingScene), 440, 640);
-        launch();
-    }
-
-} */
 

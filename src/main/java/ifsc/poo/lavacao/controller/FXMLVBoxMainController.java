@@ -1,5 +1,7 @@
 package ifsc.poo.lavacao.controller;
 
+import ifsc.poo.lavacao.Main;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -28,36 +30,36 @@ public class FXMLVBoxMainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //
+        // TODO
     }
 
     @FXML
     public void handleMenuItemCadastrosClientes() throws IOException {
-        AnchorPane a = (AnchorPane) FXMLLoader.load(getClass().getResource("/javafxmvc/view/FXMLAnchorPaneCadastrosClientes.fxml"));
+        AnchorPane a = (AnchorPane) FXMLLoader.load(Main.class.getResource("view/FXMLAnchorPaneCadastrosClientes.fxml"));
         anchorPane.getChildren().setAll(a);
     }
     
     @FXML
     public void handleMenuItemProcessosVendas() throws IOException {
-        AnchorPane a = (AnchorPane) FXMLLoader.load(getClass().getResource("/javafxmvc/view/FXMLAnchorPaneProcessosVendas.fxml"));
+        AnchorPane a = (AnchorPane) FXMLLoader.load(Main.class.getResource("view/FXMLAnchorPaneProcessosVendas.fxml"));
         anchorPane.getChildren().setAll(a);
     }
     
     @FXML
     public void handleMenuItemGraficosVendasPorMes() throws IOException {
-        AnchorPane a = (AnchorPane) FXMLLoader.load(getClass().getResource("/javafxmvc/view/FXMLAnchorPaneGraficosVendasPorMes.fxml"));
+        AnchorPane a = (AnchorPane) FXMLLoader.load(Main.class.getResource("view/FXMLAnchorPaneGraficosVendasPorMes.fxml"));
         anchorPane.getChildren().setAll(a);
     }
     
     @FXML
     public void handleMenuItemRelatoriosQuantidadeProdutos() throws IOException {
-        AnchorPane a = (AnchorPane) FXMLLoader.load(getClass().getResource("/javafxmvc/view/FXMLAnchorPaneRelatoriosQuantidadeProdutos.fxml"));
+        AnchorPane a = (AnchorPane) FXMLLoader.load(Main.class.getResource("view/FXMLAnchorPaneRelatoriosQuantidadeProdutos.fxml"));
         anchorPane.getChildren().setAll(a);
     }
     
     @FXML
     public void handleMenuItemRelatoriosQuantidadeProdutosPorCategoria() throws IOException {
-        AnchorPane a = (AnchorPane) FXMLLoader.load(getClass().getResource("/javafxmvc/view/FXMLAnchorPaneRelatoriosQuantidadeProdutosPorCategoria.fxml"));
+        AnchorPane a = (AnchorPane) FXMLLoader.load(Main.class.getResource("view/FXMLAnchorPaneRelatoriosQuantidadeProdutosPorCategoria.fxml"));
         anchorPane.getChildren().setAll(a);
     }
 

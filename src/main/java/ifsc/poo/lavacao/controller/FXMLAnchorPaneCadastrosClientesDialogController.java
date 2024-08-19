@@ -2,8 +2,6 @@ package ifsc.poo.lavacao.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import ifsc.poo.lavacao.model.Cliente;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -11,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import ifsc.poo.lavacao.model.domain.Cliente;
 
 public class FXMLAnchorPaneCadastrosClientesDialogController implements Initializable {
 
@@ -53,10 +52,10 @@ public class FXMLAnchorPaneCadastrosClientesDialogController implements Initiali
     }
 
     public void setCliente(Cliente cliente) {
-//        this.cliente = cliente;
-//        this.textFieldClienteNome.setText(cliente.getNome());
-//        this.textFieldClienteCPF.setText(cliente.getCpf());
-//        this.textFieldClienteTelefone.setText(cliente.getTelefone());
+        this.cliente = cliente;
+        this.textFieldClienteNome.setText(cliente.getNome());
+        this.textFieldClienteCPF.setText(cliente.getCpf());
+        this.textFieldClienteTelefone.setText(cliente.getTelefone());
     }
 
     public boolean isButtonConfirmarClicked() {
@@ -67,8 +66,8 @@ public class FXMLAnchorPaneCadastrosClientesDialogController implements Initiali
     public void handleButtonConfirmar() {
         if (validarEntradaDeDados()) {
             cliente.setNome(textFieldClienteNome.getText());
-//            cliente.setCpf(textFieldClienteCPF.getText());
-//            cliente.setTelefone(textFieldClienteTelefone.getText());
+            cliente.setCpf(textFieldClienteCPF.getText());
+            cliente.setTelefone(textFieldClienteTelefone.getText());
 
             buttonConfirmarClicked = true;
             dialogStage.close();
