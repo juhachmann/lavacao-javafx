@@ -1,57 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.gluonhq.charm.glisten.control.Icon?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="bg-accent-emphasis" stylesheets="@../../Downloads/com/oracle/javafx/scenebuilder/kit/util/css/caspian/nord-dark.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <BorderPane prefHeight="409.0" prefWidth="608.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <center>
-            <ImageView fitHeight="321.0" fitWidth="332.0" BorderPane.alignment="CENTER">
-               <image>
-                  <Image url="@../../Downloads/output-onlinepngtools.png" />
-               </image>
-            </ImageView>
-         </center>
-         <top>
-            <AnchorPane prefHeight="26.0" prefWidth="600.0" styleClass="bg-subtle" BorderPane.alignment="CENTER">
-               <children>
-                  <MenuBar prefHeight="27.0" prefWidth="543.0" style="-fx-font-size: 12pt;" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ifsc.poo.lavacao.controller.MainController">
+
+    <top>
+        <HBox prefHeight="15.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <children>
+                <MenuBar style="-fx-background-color: transparent;">
                     <menus>
-                      <Menu mnemonicParsing="false" text="Ordens de Serviço">
-                        <items>
-                          <MenuItem mnemonicParsing="false" text="Adiconar" />
-                              <MenuItem mnemonicParsing="false" text="Histórico" />
-                        </items>
-                      </Menu>
-                      <Menu mnemonicParsing="false" text="Clientes">
-                           <items>
-                              <Menu mnemonicParsing="false" text="Adicionar">
-                                <items>
-                                  <MenuItem mnemonicParsing="false" text="Pessoa Física" />
-                                    <MenuItem mnemonicParsing="false" text="Pessoa Jurídica" />
-                                </items>
-                              </Menu>
-                              <MenuItem mnemonicParsing="false" text="Cadastrados" />
-                           </items>
-                      </Menu>
-                      <Menu mnemonicParsing="false" text="Relatórios">
-                        <items>
-                          <MenuItem mnemonicParsing="false" text="Relatório A" />
-                        </items>
-                      </Menu>
+                        <Menu mnemonicParsing="false" text="Ordem de Serviço">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="Adicionar" />
+                                <MenuItem mnemonicParsing="false" text="Historico" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Clientes">
+                            <items>
+                                <Menu mnemonicParsing="false" text="Adicionar">
+                                    <items>
+                                        <MenuItem mnemonicParsing="false" text="Pessoa Fisica" />
+                                        <MenuItem mnemonicParsing="false" text="Pessoa Juridica" />
+                                    </items>
+                                </Menu>
+                                <MenuItem mnemonicParsing="false" text="Consultar" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Relatorios">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="About" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Admin">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="Pontuaçao" />
+                                <MenuItem mnemonicParsing="false" text="Serviços" />
+                                <MenuItem mnemonicParsing="false" text="Categorias" />
+                                <MenuItem mnemonicParsing="false" text="Outros" />
+                            </items>
+                        </Menu>
                     </menus>
-                  </MenuBar>
-                  <Icon content="SETTINGS" layoutX="564.0" layoutY="6.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="6.0" />
-               </children>
-            </AnchorPane>
-         </top>
-      </BorderPane>
-   </children>
-</AnchorPane>
+                </MenuBar>
+            </children>
+        </HBox>
+    </top>
+   <center>
+         <ImageView fitHeight="285.0" fitWidth="299.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+             <image>
+                 <Image url="@../../../../../../../assets/output-onlinepngtools.png" />
+             </image>
+         </ImageView>
+   </center>
+
+</BorderPane>

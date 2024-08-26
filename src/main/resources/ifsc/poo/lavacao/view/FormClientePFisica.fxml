@@ -34,7 +34,7 @@
               </rowConstraints>
                <children>
                   <Label prefHeight="44.0" prefWidth="461.0" text="Nome:" />
-                  <TextField prefHeight="34.0" prefWidth="362.0" style="-fx-background-color: transparent;" styleClass="color-input-field" GridPane.rowIndex="1" />
+                  <TextField prefHeight="43.0" prefWidth="489.0" GridPane.rowIndex="1" />
                </children>
             </GridPane>
             <GridPane layoutX="10.0" layoutY="10.0" prefHeight="61.0" prefWidth="223.0" GridPane.rowIndex="1">
