@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="574.0" prefWidth="870.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane layoutX="28.0" layoutY="302.0" prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <fx:include source="FormClientePFisica.fxml" />
+         </children>
+      </AnchorPane>
+      <fx:include source="TableClientes.fxml" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <TableView layoutX="570.0" layoutY="349.0" prefHeight="148.0" prefWidth="276.0">
+        <columns>
+          <TableColumn prefWidth="113.0" text="Placa" />
+          <TableColumn prefWidth="162.0" text="Modelo" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
