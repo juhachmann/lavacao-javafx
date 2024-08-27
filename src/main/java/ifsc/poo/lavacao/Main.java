@@ -15,15 +15,17 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         
         // Temas: https://mkpaz.github.io/atlantafx/#themes 
-        Application.setUserAgentStylesheet(new NordDark().getUserAgentStylesheet());
+       // Application.setUserAgentStylesheet(new NordDark().getUserAgentStylesheet());
         
-        Parent root = FXMLLoader.load(getClass().getResource("view/FXMLVBoxMain.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
 
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
-        stage.setTitle("Sistema de Vendas (JavaFX MVC)");
+        stage.setTitle("Sistema de Lavação (JavaFX MVC)");
         stage.setResizable(true);
+        stage.setMinWidth(800);
+        stage.setMinHeight(600);
         stage.show();
     }
 

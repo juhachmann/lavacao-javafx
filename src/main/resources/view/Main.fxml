@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ifsc.poo.lavacao.controller.MainController">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ifsc.poo.lavacao.controller.MainController">
 
     <top>
         <HBox prefHeight="15.0" prefWidth="600.0" BorderPane.alignment="CENTER">
@@ -17,19 +17,19 @@
                     <menus>
                         <Menu mnemonicParsing="false" text="Ordem de Serviço">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Adicionar" />
-                                <MenuItem mnemonicParsing="false" text="Historico" />
+                                <MenuItem mnemonicParsing="false" onAction="#handleMenuAdicionarOS" text="Adicionar" />
+                                <MenuItem mnemonicParsing="false" onAction="#handleMenuOSHistorico" text="Historico" />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Clientes">
                             <items>
                                 <Menu mnemonicParsing="false" text="Adicionar">
                                     <items>
-                                        <MenuItem mnemonicParsing="false" text="Pessoa Fisica" />
-                                        <MenuItem mnemonicParsing="false" text="Pessoa Juridica" />
+                                        <MenuItem mnemonicParsing="false" onAction="#handleMenuClientesAdicionarPF" text="Pessoa Fisica" />
+                                        <MenuItem mnemonicParsing="false" onAction="#handleMenuClientesAdicionarPJ" text="Pessoa Juridica" />
                                     </items>
                                 </Menu>
-                                <MenuItem mnemonicParsing="false" text="Consultar" />
+                                <MenuItem mnemonicParsing="false" onAction="#handleMenuClientesConsultar" text="Consultar" />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Relatorios">
@@ -39,10 +39,10 @@
                         </Menu>
                         <Menu mnemonicParsing="false" text="Admin">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Pontuaçao" />
-                                <MenuItem mnemonicParsing="false" text="Serviços" />
-                                <MenuItem mnemonicParsing="false" text="Categorias" />
-                                <MenuItem mnemonicParsing="false" text="Outros" />
+                                <MenuItem mnemonicParsing="false" onAction="#handleMenuAdminPontuacao" text="Pontuaçao" />
+                                <MenuItem mnemonicParsing="false" onAction="#handleMenuAdminServicos" text="Serviços" />
+                                <MenuItem mnemonicParsing="false" onAction="#handleMenuAdminCategorias" text="Categorias" />
+                                <MenuItem mnemonicParsing="false" onAction="#handleMenuAdminOutros" text="Outros" />
                             </items>
                         </Menu>
                     </menus>
@@ -53,7 +53,7 @@
    <center>
          <ImageView fitHeight="285.0" fitWidth="299.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
              <image>
-                 <Image url="@../../../../../../../assets/output-onlinepngtools.png" />
+                 <Image url="@../img/main-image.png" />
              </image>
          </ImageView>
    </center>

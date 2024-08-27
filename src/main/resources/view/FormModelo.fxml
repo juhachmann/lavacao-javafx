@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="333.0" prefWidth="549.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="333.0" prefWidth="549.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ifsc.poo.lavacao.controller.FormModeloController">
    <children>
       <GridPane hgap="10.0" layoutX="14.0" layoutY="14.0" prefHeight="326.0" prefWidth="522.0" vgap="10.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="13.0">
         <columnConstraints>
@@ -34,7 +34,7 @@
                </rowConstraints>
                <children>
                   <Label prefHeight="29.0" prefWidth="537.0" text="Modelo:" />
-                  <TextField prefHeight="34.0" prefWidth="362.0" GridPane.rowIndex="1" />
+                  <TextField fx:id="inputModelo" prefHeight="34.0" prefWidth="362.0" GridPane.rowIndex="1" />
                </children>
             </GridPane>
             <GridPane hgap="5.0" prefHeight="62.0" prefWidth="611.0" GridPane.rowIndex="1">
@@ -48,8 +48,8 @@
               </rowConstraints>
                <children>
                   <Label prefHeight="22.0" prefWidth="286.0" text="Marca:" GridPane.columnSpan="2147483647" />
-                  <ComboBox prefHeight="34.0" prefWidth="241.0" GridPane.rowIndex="1" />
-                  <Button minWidth="41.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="41.0" text="+" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <ComboBox fx:id="selectMarca" prefHeight="34.0" prefWidth="241.0" GridPane.rowIndex="1" />
+                  <Button minWidth="41.0" mnemonicParsing="false" onAction="#handleAdicionarMarca" prefHeight="37.0" prefWidth="41.0" text="+" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
             </GridPane>
             <GridPane hgap="10.0" layoutX="10.0" layoutY="78.0" prefHeight="62.0" prefWidth="611.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -62,7 +62,7 @@
                </rowConstraints>
                <children>
                   <Label prefHeight="22.0" prefWidth="286.0" text="Categoria:" GridPane.columnSpan="2147483647" />
-                  <ComboBox prefHeight="34.0" prefWidth="379.0" GridPane.rowIndex="1" />
+                  <ComboBox fx:id="selectCategoria" prefHeight="34.0" prefWidth="379.0" GridPane.rowIndex="1" />
                </children>
             </GridPane>
             <GridPane layoutX="10.0" layoutY="10.0" prefHeight="61.0" prefWidth="223.0" GridPane.rowIndex="3">
@@ -75,7 +75,7 @@
                </rowConstraints>
                <children>
                   <Label prefHeight="44.0" prefWidth="461.0" text="Potência:" />
-                  <TextField prefHeight="34.0" prefWidth="362.0" GridPane.rowIndex="1" />
+                  <TextField fx:id="inputPotencia" prefHeight="34.0" prefWidth="362.0" GridPane.rowIndex="1" />
                </children>
             </GridPane>
             <GridPane layoutX="10.0" layoutY="10.0" prefHeight="61.0" prefWidth="223.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
@@ -87,13 +87,13 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <ComboBox prefHeight="34.0" prefWidth="313.0" GridPane.rowIndex="1" />
+                  <ComboBox fx:id="selectCombustivel" prefHeight="34.0" prefWidth="313.0" GridPane.rowIndex="1" />
                   <Label prefHeight="44.0" prefWidth="461.0" text="Tipo de Combustível:" />
                </children>
             </GridPane>
             <Label alignment="BOTTOM_LEFT" graphicTextGap="6.0" prefHeight="33.0" prefWidth="383.0" styleClass="text-bold" text="Propriedades do Motor" GridPane.rowIndex="2" />
-            <Button alignment="CENTER" cancelButton="true" contentDisplay="CENTER" layoutX="335.0" layoutY="302.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="114.0" text="Cancelar" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-            <Button alignment="CENTER" contentDisplay="CENTER" defaultButton="true" mnemonicParsing="false" prefHeight="34.0" prefWidth="114.0" text="Salvar" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+            <Button alignment="CENTER" cancelButton="true" contentDisplay="CENTER" layoutX="335.0" layoutY="302.0" mnemonicParsing="false" onAction="#handleCancelar" prefHeight="34.0" prefWidth="114.0" text="Cancelar" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+            <Button alignment="CENTER" contentDisplay="CENTER" defaultButton="true" mnemonicParsing="false" onAction="#handleSalvar" prefHeight="34.0" prefWidth="114.0" text="Salvar" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
          </children>
       </GridPane>
    </children>

@@ -5,6 +5,7 @@ module Main {
     requires java.sql;
     requires jasperreports;
     requires com.ctc.wstx;
+    requires java.base;
     opens ifsc.poo.lavacao to javafx.fxml;
     opens ifsc.poo.lavacao.controller to javafx.fxml;
     opens ifsc.poo.lavacao.model.domain to javafx.base;
