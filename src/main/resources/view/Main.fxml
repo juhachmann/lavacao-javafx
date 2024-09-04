@@ -13,7 +13,7 @@
     <top>
         <HBox prefHeight="15.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <children>
-                <MenuBar style="-fx-background-color: transparent;">
+                <MenuBar style="-fx-background-cor: transparent;">
                     <menus>
                         <Menu mnemonicParsing="false" text="Ordem de Serviço">
                             <items>

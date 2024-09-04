@@ -6,10 +6,6 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Rafael Vargas Mesquita
- */
 public class DatabaseMySQL implements Database {
 
     private Connection connection;
@@ -31,8 +27,8 @@ public class DatabaseMySQL implements Database {
         try {
             connection.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DatabasePostgreSQL.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DatabaseMySQL.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
 }

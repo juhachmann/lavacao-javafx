@@ -1,29 +1,36 @@
 package ifsc.poo.lavacao.model.domain;
 
-import java.io.Serializable;
+import ifsc.poo.lavacao.model.exceptions.ExceptionLavacao;
 
-public class Cliente implements Serializable {
+import java.time.LocalDate;
+import java.util.*;
 
-    private int cdCliente;
-    private String nome;
-    private String cpf;
-    private String telefone;
+public abstract class Cliente implements ICliente {
 
-    public Cliente(){
+    protected int id;
+
+    protected String nome;
+
+    protected String email;
+
+    protected String celular;
+
+    protected LocalDate dataCadastro;
+
+    private Set<Veiculo> veiculos = new HashSet<>();
+
+    private Pontuacao pontuacao;
+
+    public static ClientBuilder fromBuilder() {
+        return new ClientBuilder();
     }
-    
-    public Cliente(int cdCliente, String nome, String cpf) {
-        this.cdCliente = cdCliente;
-        this.nome = nome;
-        this.cpf = cpf;
+
+    public int getId() {
+        return id;
     }
 
-    public int getCdCliente() {
-        return cdCliente;
-    }
-
-    public void setCdCliente(int cdCliente) {
-        this.cdCliente = cdCliente;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -34,25 +41,55 @@ public class Cliente implements Serializable {
         this.nome = nome;
     }
 
-    public String getCpf() {
-        return cpf;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-    
-    public String getTelefone() {
-        return telefone;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
+    public String getCelular() {
+        return celular;
     }
 
-    @Override
-    public String toString() {
-        return this.nome;
+    public void setCelular(String celular) {
+        this.celular = celular;
     }
-    
+
+    public LocalDate getDataCadastro() {
+        return dataCadastro;
+    }
+
+    public void setDataCadastro(LocalDate dataCadastro) {
+        this.dataCadastro = dataCadastro;
+    }
+
+    public Set<Veiculo> getVeiculos() {
+        return veiculos;
+    }
+
+    public void setVeiculos(Set<Veiculo> veiculos) {
+        this.veiculos = veiculos;
+    }
+
+    public Pontuacao getPontuacao() {
+        return pontuacao;
+    }
+
+    public void setPontuacao(Pontuacao pontuacao) {
+        this.pontuacao = pontuacao;
+    }
+
+    public void addVeiculo(Veiculo veiculo) {
+        Objects.requireNonNull(veiculo);
+        veiculos.add(veiculo);
+    }
+
+    public void removeVeiculo(Veiculo veiculo) {
+        if(!veiculos.remove(veiculo))
+            throw new ExceptionLavacao("Cliente não possui o veículo informado!");
+    }
+
+
 }
