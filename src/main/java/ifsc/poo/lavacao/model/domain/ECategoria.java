@@ -2,11 +2,11 @@ package ifsc.poo.lavacao.model.domain;
 
 public enum ECategoria {
 
-    SMALL("Pequeno"),
-    MEDIUM("Médio"),
-    LARGE("Grande"),
-    MOTOCYCLE("Moto"),
-    DEFAULT("Padrão");
+    PEQUENO("Pequeno"),
+    MEDIO("Médio"),
+    GRANDE("Grande"),
+    MOTO("Moto"),
+    PADRAO("Padrão");
 
     private String nome;
 

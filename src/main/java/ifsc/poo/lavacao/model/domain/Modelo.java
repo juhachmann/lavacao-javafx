@@ -1,21 +1,14 @@
 package ifsc.poo.lavacao.model.domain;
 
 
-
-
 public class Modelo {
 
     private int id;
-
     private String descricao;
-
-
     private Marca marca;
-
     private ECategoria categoria;
+    private Motor motor = new Motor();
 
-
-    private Motor motor;
 
     public int getId() {
         return id;
@@ -53,8 +46,14 @@ public class Modelo {
         return motor;
     }
 
-    public void setMotor(Motor motor) {
-        this.motor = motor;
+    @Override
+    public String toString() {
+        return "Modelo{" +
+                "id=" + id +
+                ", descricao='" + descricao + '\'' +
+                ", marca=" + marca +
+                ", categoria=" + categoria +
+                ", motor=" + motor +
+                '}';
     }
-
 }

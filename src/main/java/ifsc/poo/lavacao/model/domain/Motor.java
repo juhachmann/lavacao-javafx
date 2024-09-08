@@ -31,4 +31,13 @@ public class Motor {
         this.tipoCombustivel = tipoCombustivel;
     }
 
+    @Override
+    public String toString() {
+        return "Motor{" +
+                "id=" + id +
+                ", potencia=" + potencia +
+                ", tipoCombustivel=" + tipoCombustivel +
+                '}';
+    }
+
 }

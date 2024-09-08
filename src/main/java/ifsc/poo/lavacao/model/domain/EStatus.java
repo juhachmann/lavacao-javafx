@@ -2,9 +2,9 @@ package ifsc.poo.lavacao.model.domain;
 
 public enum EStatus {
 
-    OPEN ("aberta"),
-    CLOSED ("fechada"),
-    CANCELLED ("cancelada");
+    ABERTA ("aberta"),
+    FECHADA ("fechada"),
+    CANCELADA ("cancelada");
 
     private final String name;
 

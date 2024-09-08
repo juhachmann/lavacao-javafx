@@ -22,5 +22,13 @@ public class Marca {
         this.nome = nome;
     }
 
+    @Override
+    public String toString() {
+        return "Marca{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                '}';
+    }
+
 }
 

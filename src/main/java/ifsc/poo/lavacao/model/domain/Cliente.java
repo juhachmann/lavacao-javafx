@@ -19,10 +19,10 @@ public abstract class Cliente implements ICliente {
 
     private Set<Veiculo> veiculos = new HashSet<>();
 
-    private Pontuacao pontuacao;
+    private Pontuacao pontuacao = new Pontuacao();
 
-    public static ClientBuilder fromBuilder() {
-        return new ClientBuilder();
+    public static ClienteBuilder fromBuilder() {
+        return new ClienteBuilder();
     }
 
     public int getId() {

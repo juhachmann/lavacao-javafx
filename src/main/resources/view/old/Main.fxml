@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ifsc.poo.lavacao.controller.MainController">
+
+    <top>
+        <HBox prefHeight="15.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <children>
+                <MenuBar prefHeight="25.0" prefWidth="639.0" HBox.hgrow="ALWAYS">
+                    <menus>
+                        <Menu mnemonicParsing="false" text="Ordem de Serviço">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#menuAdicionarOS" text="Nova" />
+                                <MenuItem mnemonicParsing="false" onAction="#menuConsultarOS" text="Consultar" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Clientes">
+                            <items>
+                                <Menu mnemonicParsing="false" text="Novo">
+                                    <items>
+                                        <MenuItem mnemonicParsing="false" onAction="#menuAdicionarClientePFisica" text="Pessoa Fisica" />
+                                        <MenuItem mnemonicParsing="false" onAction="#menuAdicionarClientePJuridica" text="Pessoa Juridica" />
+                                    </items>
+                                </Menu>
+                                <MenuItem mnemonicParsing="false" onAction="#menuClientesConsultar" text="Consultar" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Relatórios" />
+                        <Menu mnemonicParsing="false" text="Configurações">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#handleMenuAdminPontuacao" text="Pontuaçao" />
+                                <MenuItem mnemonicParsing="false" onAction="#handleMenuAdminServicos" text="Serviços" />
+                                <MenuItem mnemonicParsing="false" onAction="#handleMenuAdminCategorias" text="Categorias" />
+                                <MenuItem mnemonicParsing="false" onAction="#handleMenuAdminOutros" text="Outros" />
+                            </items>
+                        </Menu>
+                    </menus>
+                </MenuBar>
+            </children>
+        </HBox>
+    </top>
+   <center>
+         <ImageView fitHeight="285.0" fitWidth="299.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+             <image>
+                 <Image url="@../../img/main-image.png" />
+             </image>
+         </ImageView>
+   </center>
+
+</BorderPane>

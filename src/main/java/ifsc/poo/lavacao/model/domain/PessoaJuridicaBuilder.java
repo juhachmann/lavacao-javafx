@@ -2,12 +2,12 @@ package ifsc.poo.lavacao.model.domain;
 
 public class PessoaJuridicaBuilder {
 
-    private ClientBuilder clientBuilder;
+    private ClienteBuilder clienteBuilder;
     private String cnpj;
     private String inscricaoEstadual;
 
-    PessoaJuridicaBuilder(ClientBuilder clientBuilder) {
-        this.clientBuilder = clientBuilder;
+    PessoaJuridicaBuilder(ClienteBuilder clienteBuilder) {
+        this.clienteBuilder = clienteBuilder;
     }
 
     public PessoaJuridicaBuilder setCnpj(String cnpj) {
@@ -22,10 +22,11 @@ public class PessoaJuridicaBuilder {
 
     public PessoaJuridica build() {
         PessoaJuridica pj = new PessoaJuridica();
-        pj.setNome(clientBuilder.nome);
-        pj.setEmail(clientBuilder.email);
-        pj.setCelular(clientBuilder.celular);
-        pj.setDataCadastro(clientBuilder.dataCadastro);
+        pj.setId(clienteBuilder.id);
+        pj.setNome(clienteBuilder.nome);
+        pj.setEmail(clienteBuilder.email);
+        pj.setCelular(clienteBuilder.celular);
+        pj.setDataCadastro(clienteBuilder.dataCadastro);
         pj.setInscricaoEstadual(inscricaoEstadual);
         pj.setCnpj(cnpj);
         return pj;

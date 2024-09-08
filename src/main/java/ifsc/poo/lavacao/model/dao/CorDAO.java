@@ -11,49 +11,47 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class CorDAO implements ICrud<Cor>{
-
-    private final Connection connection;
-
-    public CorDAO(Connection connection) {
-        this.connection = connection;
-    }
+public class CorDAO extends ACrudDAO<Cor> {
 
 
     @Override
-    public boolean inserir(Cor cor) {
-        String sql = "INSERT INTO cores(nome) VALUES(?)";
+    public Cor create(Cor cor) {
+        String sql = "INSERT INTO cores (nome) VALUES (?);";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, cor.getNome());
             stmt.execute();
-            return true;
+
+            ResultSet result = connection.prepareStatement("SELECT MAX(id) as id from cores")
+                    .executeQuery();
+            if(result.next())
+                return this.getById(result.getInt("id"));
+            else return null;
+
         } catch (SQLException ex) {
             Logger.getLogger(CorDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            return null;
         }
     }
 
-
     @Override
-    public boolean alterar(Cor cor) {
-        String sql = "UPDATE cores SET nome = ? WHERE id = ?";
+    public Cor update(Cor cor) {
+        String sql = "UPDATE cores SET nome = ? WHERE id = ?;";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, cor.getNome());
             stmt.setInt(2, cor.getId());
             stmt.execute();
-            return true;
+            return this.getById(cor.getId());
         } catch (SQLException ex) {
             Logger.getLogger(CorDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            return null;
         }
     }
 
-
     @Override
-    public List<Cor> listar() {
-        String sql = "SELECT * FROM cores";
+    public List<Cor> getAll() {
+        String sql = "SELECT * FROM cores;";
         List<Cor> retorno = new ArrayList<>();
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -70,10 +68,9 @@ public class CorDAO implements ICrud<Cor>{
         return retorno;
     }
 
-
     @Override
-    public Cor buscar(int id) {
-        String sql = "SELECT * FROM cores WHERE id = ?";
+    public Cor getById(int id) {
+        String sql = "SELECT * FROM cores WHERE id = ?;";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setInt(1, id);
@@ -90,10 +87,28 @@ public class CorDAO implements ICrud<Cor>{
         return null;
     }
 
+    public List<Cor> getByName(String name) {
+        String sql = "SELECT * FROM cores WHERE nome LIKE ? ESCAPE '!';";
+        List<Cor> retorno = new ArrayList<>();
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, "%" + name + "%");
+            ResultSet resultado = stmt.executeQuery();
+            while (resultado.next()) {
+                Cor cor = new Cor();
+                cor.setId(resultado.getInt("id"));
+                cor.setNome(resultado.getString("nome"));
+                retorno.add(cor);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return retorno;
+    }
 
     @Override
-    public boolean remover(Cor cor) {
-        String sql = "DELETE FROM cores WHERE id = ?";
+    public boolean delete(Cor cor) {
+        String sql = "DELETE FROM cores WHERE id = ?;";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setInt(1, cor.getId());

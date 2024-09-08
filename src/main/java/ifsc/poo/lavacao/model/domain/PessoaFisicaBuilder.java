@@ -4,12 +4,12 @@ import java.time.LocalDate;
 
 public class PessoaFisicaBuilder {
 
-    private ClientBuilder clientBuilder;
+    private ClienteBuilder clienteBuilder;
     private LocalDate dataNascimento;
     private String cpf;
 
-    PessoaFisicaBuilder(ClientBuilder clientBuilder) {
-        this.clientBuilder = clientBuilder;
+    PessoaFisicaBuilder(ClienteBuilder clienteBuilder) {
+        this.clienteBuilder = clienteBuilder;
     }
 
     public PessoaFisicaBuilder setDataNascimento(LocalDate dataNascimento) {
@@ -26,10 +26,11 @@ public class PessoaFisicaBuilder {
 
     public PessoaFisica build() {
         PessoaFisica pf =  new PessoaFisica();
-        pf.setNome(clientBuilder.nome);
-        pf.setEmail(clientBuilder.email);
-        pf.setCelular(clientBuilder.celular);
-        pf.setDataCadastro(clientBuilder.dataCadastro);
+        pf.setId(clienteBuilder.id);
+        pf.setNome(clienteBuilder.nome);
+        pf.setEmail(clienteBuilder.email);
+        pf.setCelular(clienteBuilder.celular);
+        pf.setDataCadastro(clienteBuilder.dataCadastro);
         pf.setCpf(cpf);
         pf.setDataNascimento(dataNascimento);
         return pf;

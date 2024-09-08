@@ -5,9 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import atlantafx.base.theme.*;
-
-import java.io.IOException;
 
 public class Main extends Application {
 
@@ -20,7 +17,6 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
 
         Scene scene = new Scene(root);
-
         stage.setScene(scene);
         stage.setTitle("Sistema de Lavação (JavaFX MVC)");
         stage.setResizable(true);

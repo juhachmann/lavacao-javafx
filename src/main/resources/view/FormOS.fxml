@@ -44,7 +44,7 @@
         <columns>
           <TableColumn prefWidth="34.0" text="#" />
           <TableColumn prefWidth="116.0" text="Serviço" />
-            <TableColumn prefWidth="105.0" text="Observaçao" />
+            <TableColumn prefWidth="105.0" text="Observação" />
             <TableColumn prefWidth="103.0" text="Valor" />
         </columns>
          <columnResizePolicy>

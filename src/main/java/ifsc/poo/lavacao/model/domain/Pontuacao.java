@@ -5,12 +5,7 @@ import ifsc.poo.lavacao.model.exceptions.ExceptionLavacao;
 
 public class Pontuacao {
 
-
-    private int id;
-
-
     private Cliente cliente;
-
     private int quantidade = 0;
 
     public int getQuantidade() {

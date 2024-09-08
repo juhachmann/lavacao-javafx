@@ -1,21 +1,18 @@
 package ifsc.poo.lavacao.model.domain;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class OrdemDeServico {
 
     private int id;
-
     private double desconto;
-
-    private Date agenda;
-
+    private LocalDate agenda;
     private List<ItemOS> items = new ArrayList<>();
-
     private Veiculo veiculo;
+    private EStatus status;
 
     public int getId() {
         return id;
@@ -41,11 +38,11 @@ public class OrdemDeServico {
         this.desconto = desconto;
     }
 
-    public Date getAgenda() {
+    public LocalDate getAgenda() {
         return agenda;
     }
 
-    public void setAgenda(Date agenda) {
+    public void setAgenda(LocalDate agenda) {
         this.agenda = agenda;
     }
 
@@ -57,7 +54,21 @@ public class OrdemDeServico {
         this.items = items;
     }
 
+    public EStatus getStatus() {
+        return status;
+    }
 
+    public void setStatus(EStatus status) {
+        this.status = status;
+    }
+
+    public Veiculo getVeiculo() {
+        return veiculo;
+    }
+
+    public void setVeiculo(Veiculo veiculo) {
+        this.veiculo = veiculo;
+    }
 
     // TODO Esses métodos não correspondem a um atributo do banco
     //  => como o Data REST vai lidar com ele?
@@ -83,4 +94,16 @@ public class OrdemDeServico {
         this.items.remove(itemOS);
     }
 
+
+    @Override
+    public String toString() {
+        return "OrdemDeServico{" +
+                "id=" + id +
+                ", desconto=" + desconto +
+                ", agenda=" + agenda +
+                ", items=" + items +
+                ", veiculo=" + veiculo +
+                ", status=" + status +
+                '}';
+    }
 }

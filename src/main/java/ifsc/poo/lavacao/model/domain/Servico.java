@@ -12,8 +12,7 @@ public class Servico {
 
     private double valor;
 
-
-    private ECategoria category;
+    private ECategoria categoria;
 
     public int getId() {
         return id;
@@ -37,6 +36,14 @@ public class Servico {
 
     public void setValor(double valor) {
         this.valor = valor;
+    }
+
+    public ECategoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(ECategoria categoria) {
+        this.categoria = categoria;
     }
 
     public static int getPontos() {

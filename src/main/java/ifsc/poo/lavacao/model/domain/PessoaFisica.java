@@ -10,7 +10,6 @@ import java.util.Objects;
 public class PessoaFisica extends Cliente {
 
     private String cpf;
-
     private LocalDate dataNascimento;
 
     public String getCpf() {

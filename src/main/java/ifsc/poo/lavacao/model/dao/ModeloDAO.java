@@ -1,9 +1,11 @@
 package ifsc.poo.lavacao.model.dao;
 
-import ifsc.poo.lavacao.model.domain.*;
+
+import ifsc.poo.lavacao.model.domain.ECategoria;
+import ifsc.poo.lavacao.model.domain.ETipoCombustivel;
+import ifsc.poo.lavacao.model.domain.Marca;
 import ifsc.poo.lavacao.model.domain.Modelo;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,64 +14,105 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ModeloDAO implements ICrud<Modelo> {
 
-    
-    private final Connection connection;
+public class ModeloDAO extends ACrudDAO<Modelo> {
 
-    public ModeloDAO(Connection connection) {
-        this.connection = connection;
-    }
-
-
-    // TODO Fazer pegando o id que acabou de ser inserido
 
     @Override
-    public boolean inserir(Modelo modelo) {
-        String sql = "INSERT INTO modelos(descricao, categoria, marca_id) VALUES(?, ?, ?)";
-        try {
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setString(1, modelo.getDescricao());
-            stmt.setString(2, modelo.getCategoria().name());
-            stmt.setInt(3, modelo.getMarca().getId());
-            // TODO Fazer o motor
-            stmt.execute();
-            return true;
+    public Modelo create(Modelo modelo) {
+        String sqlA = "INSERT INTO modelos (descricao, categoria, marca_id) VALUES (?, ?, ?) ;";
+        String sqlB = "INSERT INTO motores (modelo_id, potencia, tipo_combustivel) " +
+                "VALUES ( (SELECT MAX(id) FROM modelos), ?, ?);";
+
+        try ( PreparedStatement createModelo = connection.prepareStatement(sqlA);
+              PreparedStatement createMotor = connection.prepareStatement(sqlB))
+        {
+            connection.setAutoCommit(false);
+            createModelo.setString(1, modelo.getDescricao());
+            createModelo.setString(2, modelo.getCategoria().name());
+            createModelo.setInt(3, modelo.getMarca().getId());
+            createModelo.execute();
+
+            createMotor.setInt(1, modelo.getMotor().getPotencia());
+            createMotor.setString(2, modelo.getMotor().getTipoCombustivel().name());
+            createMotor.execute();
+
+            connection.commit();
+            connection.setAutoCommit(true);
+
+            ResultSet result = connection.prepareStatement("SELECT MAX(id) as id from modelos;")
+                    .executeQuery();
+            if(result.next())
+                return this.getById(result.getInt("id"));
+            else return null;
+
         } catch (SQLException ex) {
-            Logger.getLogger(ModeloDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            if(connection != null) {
+                Logger.getLogger(ModeloDAO.class.getName()).log(Level.SEVERE, null, ex);
+                try{
+                    System.err.println("Transação está sendo desfeita (rollback)");
+                    connection.rollback();
+                } catch (SQLException exc) {
+                    Logger.getLogger(ModeloDAO.class.getName()).log(Level.SEVERE, null, exc);
+                }
+            }
+            return null;
         }
     }
 
 
     @Override
-    public boolean alterar(Modelo modelo) {
-        String sql = "UPDATE modelos SET descricao = ?, categoria = ?, marca_id = ? WHERE id = ?";
-        try {
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setString(1, modelo.getDescricao());
-            stmt.setString(2, modelo.getCategoria().name());
-            stmt.setInt(3, modelo.getMarca().getId());
-            stmt.setInt(4, modelo.getId());
-            stmt.execute();
-            return true;
+    public Modelo update(Modelo modelo) {
+        String sqlA = "UPDATE modelos SET descricao = ?, marca_id = ?, categoria = ? WHERE id = ?;";
+        String sqlB = "UPDATE motores SET potencia = ?, tipo_combustivel = ? " +
+                "WHERE modelo_id = ?;";
+        try (PreparedStatement updateModelo = connection.prepareStatement(sqlA);
+             PreparedStatement updateMotor = connection.prepareStatement(sqlB);)
+        {
+            connection.setAutoCommit(false);
+
+            updateModelo.setString(1, modelo.getDescricao());
+            updateModelo.setInt(2, modelo.getMarca().getId());
+            updateModelo.setString(3, modelo.getCategoria().name());
+            updateModelo.setInt(4, modelo.getId());
+            updateModelo.execute();
+
+            updateMotor.setInt(1, modelo.getMotor().getPotencia());
+            updateMotor.setString(2, modelo.getMotor().getTipoCombustivel().name());
+            updateMotor.setInt(3, modelo.getId());
+            updateMotor.execute();
+
+            connection.commit();
+            connection.setAutoCommit(true);
+
+            return this.getById(modelo.getId());
+
         } catch (SQLException ex) {
             Logger.getLogger(ModeloDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            if(connection != null) {
+                try {
+                    System.err.println("Transação está sendo desfeita (rollback)");
+                    connection.rollback();
+                } catch (SQLException exc) {
+                    Logger.getLogger(ModeloDAO.class.getName()).log(Level.SEVERE, null, exc);
+                }
+            }
+            return null;
         }
     }
 
 
     @Override
-    public List<Modelo> listar() {
-        String sql = "SELECT * FROM modelos m LEFT JOIN motores mt ON m.id = mt.modelo_id";
+    public List<Modelo> getAll() {
+        String sql = "SELECT m.*, mar.*, mot.* FROM modelos m " +
+                "LEFT JOIN marcas mar ON m.marca_id = mar.id " +
+                "LEFT JOIN motores mot ON m.id = mot.modelo_id;";
         List<Modelo> retorno = new ArrayList<>();
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             ResultSet resultado = stmt.executeQuery();
             while (resultado.next()) {
-                Modelo modelo = populateVO(resultado);
-                retorno.add(modelo);
+                retorno.add(mapToModelo(resultado));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ModeloDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -79,14 +122,17 @@ public class ModeloDAO implements ICrud<Modelo> {
 
 
     @Override
-    public Modelo buscar(int id) {
-        String sql = "SELECT * FROM modelos WHERE id = ?";
+    public Modelo getById(int id) {
+        String sql = "SELECT m.*, mar.*, mot.* FROM modelos m " +
+                "LEFT JOIN marcas mar ON m.marca_id = mar.id " +
+                "LEFT JOIN motores mot ON m.id = mot.modelo_id " +
+                "WHERE m.id = ?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setInt(1, id);
             ResultSet resultado = stmt.executeQuery();
             if (resultado.next()) {
-                return populateVO(resultado);
+                return mapToModelo(resultado);
             }
         } catch (SQLException ex) {
             Logger.getLogger(ModeloDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -95,9 +141,48 @@ public class ModeloDAO implements ICrud<Modelo> {
     }
 
 
+    public List<Modelo> getByName(String name) {
+        String sql = "SELECT m.*, mar.*, mot.* FROM modelos m " +
+                "LEFT JOIN marcas mar ON m.marca_id = mar.id " +
+                "LEFT JOIN motores mot ON m.id = mot.modelo_id " +
+                "WHERE m.descricao LIKE ?;";
+        List<Modelo> retorno = new ArrayList<>();
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, "%" + name + "%");
+            ResultSet resultado = stmt.executeQuery();
+            while (resultado.next()) {
+                retorno.add(mapToModelo(resultado));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ModeloDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return retorno;
+    }
+
+    public List<Modelo> getByMarca(Marca marca) {
+        String sql = "SELECT m.*, mar.*, mot.* FROM modelos m " +
+                "LEFT JOIN marcas mar ON m.marca_id = mar.id " +
+                "LEFT JOIN motores mot ON m.id = mot.modelo_id " +
+                "WHERE mar.id = ?;";
+        List<Modelo> retorno = new ArrayList<>();
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, marca.getId());
+            ResultSet resultado = stmt.executeQuery();
+            while (resultado.next()) {
+                retorno.add(mapToModelo(resultado));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ModeloDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return retorno;
+    }
+
+
     @Override
-    public boolean remover(Modelo modelo) {
-        String sql = "DELETE FROM modelos WHERE id = ?";
+    public boolean delete(Modelo modelo) {
+        String sql = "DELETE FROM modelos WHERE id = ?;";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setInt(1, modelo.getId());
@@ -109,23 +194,22 @@ public class ModeloDAO implements ICrud<Modelo> {
         }
     }
 
-
-    private Modelo populateVO(ResultSet resultado) throws SQLException {
+    private Modelo mapToModelo(ResultSet resultado) throws SQLException {
         Modelo modelo = new Modelo();
-        modelo.setId(resultado.getInt("id"));
-        modelo.setDescricao(resultado.getString("descricao"));
-        modelo.setCategoria(ECategoria.valueOf(resultado.getString("categoria")));
+        modelo.setId(resultado.getInt("m.id"));
+        modelo.setCategoria(ECategoria.valueOf(resultado.getString("m.categoria")));
+        modelo.setDescricao(resultado.getString("m.descricao"));
 
-        int marca_id = resultado.getInt("marca_id");
         Marca marca = new Marca();
-        marca.setId(marca_id);
-        modelo.setMarca(marca);
+        marca.setId(resultado.getInt("mar.id"));
+        marca.setNome(resultado.getString("mar.nome"));
 
-        modelo.getMotor().setPotencia(resultado.getInt("potencia"));
-        modelo.getMotor().setTipoCombustivel(ETipoCombustivel.valueOf(resultado.getString("tipo_combustivel")));
+        modelo.setMarca(marca);
+        modelo.getMotor().setPotencia(resultado.getInt("mot.potencia"));
+        modelo.getMotor().setTipoCombustivel(ETipoCombustivel.valueOf(resultado.getString("mot.tipo_combustivel")));
 
         return modelo;
     }
 
-    
+
 }
