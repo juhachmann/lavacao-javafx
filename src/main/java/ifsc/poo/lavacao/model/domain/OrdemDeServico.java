@@ -13,6 +13,7 @@ public class OrdemDeServico {
     private List<ItemOS> items = new ArrayList<>();
     private Veiculo veiculo;
     private EStatus status;
+    private double total;
 
     public int getId() {
         return id;
@@ -54,6 +55,14 @@ public class OrdemDeServico {
         this.items = items;
     }
 
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
     public EStatus getStatus() {
         return status;
     }
@@ -72,8 +81,10 @@ public class OrdemDeServico {
 
     // TODO Esses métodos não correspondem a um atributo do banco
     //  => como o Data REST vai lidar com ele?
-    public double getTotal() {
-        return calcularServico() - desconto;
+    public double calcularTotal() {
+        double somaServicos = calcularServico();
+        this.total = somaServicos - (somaServicos * desconto / 100);
+        return total;
     }
 
     public double calcularServico() {
@@ -87,11 +98,13 @@ public class OrdemDeServico {
     // TODO Isso aqui não sei se vai fazer sentido no backend!
     public void add(ItemOS itemOS) {
         this.items.add(itemOS);
+        this.calcularTotal();
     }
 
     // TODO Ver comentário de add
     public void remove(ItemOS itemOS) {
         this.items.remove(itemOS);
+        this.calcularTotal();
     }
 
 

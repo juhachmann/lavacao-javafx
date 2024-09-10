@@ -2,8 +2,8 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -14,13 +14,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="472.0" prefWidth="531.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ifsc.poo.lavacao.controller.FormVeiculoController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="472.0" prefWidth="447.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ifsc.poo.lavacao.controller.FormServicoController">
    <children>
       <VBox layoutX="70.0" layoutY="6.0" prefHeight="369.0" prefWidth="347.0" spacing="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <AnchorPane prefHeight="34.0" prefWidth="481.0">
                <children>
-                  <Text layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Veículo" wrappingWidth="187.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="3.734375">
+                  <Text layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Serviço" wrappingWidth="187.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="3.734375">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -33,53 +33,67 @@
                   </HBox>
                </children>
             </AnchorPane>
-            <GridPane hgap="10.0" prefHeight="221.0" prefWidth="489.0" vgap="10.0">
+            <GridPane hgap="10.0" prefHeight="278.0" prefWidth="374.0" vgap="10.0">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="118.0" />
-                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="282.0" />
-                  <ColumnConstraints hgrow="NEVER" maxWidth="195.0" minWidth="0.0" prefWidth="30.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="136.0" minWidth="10.0" prefWidth="112.0" />
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="353.0" minWidth="10.0" prefWidth="245.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label prefHeight="76.0" prefWidth="304.0" text="Placa:">
+                  <Label prefHeight="76.0" prefWidth="304.0" text="Descrição:">
                      <font>
                         <Font size="13.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="inputPlaca" prefHeight="72.0" prefWidth="282.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" />
-                  <Label prefHeight="76.0" prefWidth="304.0" text="Marca:" GridPane.rowIndex="1">
+                  <TextField fx:id="descricao" prefHeight="72.0" prefWidth="282.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" />
+                  <Label prefHeight="76.0" prefWidth="304.0" text="PEQUENO:" GridPane.rowIndex="2">
                      <font>
                         <Font size="13.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="selectMarca" onAction="#handleMarcaSelected" prefHeight="76.0" prefWidth="2000.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Button mnemonicParsing="false" onAction="#handleAdicionarMarca" prefHeight="44.0" prefWidth="42.0" text="+" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <Label layoutX="10.0" layoutY="10.0" prefHeight="76.0" prefWidth="304.0" text="Modelo:" GridPane.rowIndex="2">
+                  <TextField fx:id="peq" alignment="CENTER_RIGHT" prefHeight="29.0" prefWidth="267.0" promptText="R$ 0,00" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label layoutX="10.0" layoutY="10.0" prefHeight="76.0" prefWidth="304.0" text="MÉDIO:" GridPane.rowIndex="3">
                      <font>
                         <Font size="13.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="selectModelo" prefHeight="68.0" prefWidth="2000.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Button fx:id="btnAdicionarModelo" mnemonicParsing="false" onAction="#handleAdicionarModelo" prefHeight="44.0" prefWidth="42.0" text="+" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                  <Label layoutX="10.0" layoutY="10.0" prefHeight="76.0" prefWidth="304.0" text="Cor:" GridPane.rowIndex="3">
+                  <TextField fx:id="med" alignment="CENTER_RIGHT" prefHeight="72.0" prefWidth="282.0" promptText="R$ 0,00" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label layoutX="10.0" layoutY="10.0" prefHeight="76.0" prefWidth="304.0" text="PADRÃO:" GridPane.rowIndex="4">
                      <font>
                         <Font size="13.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="selectCor" prefHeight="57.0" prefWidth="2000.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Button layoutX="403.0" layoutY="52.0" mnemonicParsing="false" onAction="#handleAdicionarCor" prefHeight="44.0" prefWidth="42.0" text="+" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                  <Label layoutX="10.0" layoutY="10.0" prefHeight="76.0" prefWidth="304.0" text="Observações:" GridPane.rowIndex="4">
+                  <TextField fx:id="pad" alignment="CENTER_RIGHT" prefHeight="72.0" prefWidth="282.0" promptText="R$ 0,00" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Label layoutX="10.0" layoutY="10.0" prefHeight="76.0" prefWidth="304.0" text="GRANDE:" GridPane.rowIndex="5">
                      <font>
                         <Font size="13.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="inputObservacoes" layoutX="265.0" layoutY="14.0" prefHeight="68.0" prefWidth="282.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="4" />
+                  <TextField fx:id="gde" alignment="CENTER_RIGHT" prefHeight="72.0" prefWidth="282.0" promptText="R$ 0,00" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <Label prefHeight="76.0" prefWidth="304.0" text="MOTO:" GridPane.rowIndex="6">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="moto" alignment="CENTER_RIGHT" prefHeight="69.0" prefWidth="248.0" promptText="R$ 0,00" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <VBox prefHeight="25.0" prefWidth="406.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="188.0">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <Separator prefWidth="200.0" />
+                     </children>
+                  </VBox>
                </children>
             </GridPane>
             <GridPane alignment="CENTER" prefHeight="33.0" prefWidth="415.0">

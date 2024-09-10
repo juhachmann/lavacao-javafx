@@ -18,7 +18,7 @@ CREATE TABLE modelos (
   marca_id int NOT NULL,
   categoria ENUM('PEQUENO', 'MEDIO', 'GRANDE', 'MOTO', 'PADRAO') NOT NULL,
   CONSTRAINT pk_modelo PRIMARY KEY(id),
-  CONSTRAINT fk_marca_modelo FOREIGN KEY (marca_id) REFERENCES marcas(id)
+  CONSTRAINT fk_marca_modelo FOREIGN KEY (marca_id) REFERENCES marcas(id) ON UPDATE CASCADE
 ) engine = InnoDB;
 
 
@@ -38,6 +38,7 @@ CREATE TABLE clientes (
   celular varchar(20),
   email varchar(150) NOT NULL,
   data_cadastro DATE NOT NULL,
+  deleted_at TIMESTAMP,
   CONSTRAINT pk_cliente PRIMARY KEY(id)
 ) engine = InnoDB;
 
@@ -76,21 +77,22 @@ CREATE TABLE veiculos (
   modelo_id int NOT NULL,
   cor_id int NOT NULL,
   cliente_id int NOT NULL,
+  deleted_at TIMESTAMP,
   CONSTRAINT pk_cor PRIMARY KEY(id),
   CONSTRAINT fk_veiculo_modelo FOREIGN KEY (modelo_id) REFERENCES modelos(id),
-  CONSTRAINT fk_veiculo_cor FOREIGN KEY (cor_id) REFERENCES cores(id),
-  CONSTRAINT fk_veiculo_cliente FOREIGN KEY (cliente_id) REFERENCES clientes(id)
+  CONSTRAINT fk_veiculo_cor FOREIGN KEY (cor_id) REFERENCES cores(id) ,
+  CONSTRAINT fk_veiculo_cliente FOREIGN KEY (cliente_id) REFERENCES clientes(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) engine = InnoDB;
 
 
 CREATE TABLE os (
-  numero int NOT NULL AUTO_INCREMENT,
+  id int NOT NULL AUTO_INCREMENT,
   total decimal(10,2) NOT NULL,
   agenda DATE NOT NULL,
   desconto decimal(10,2),
   status enum('ABERTA', 'FECHADA', 'CANCELADA') NOT NULL,
   veiculo_id int NOT NULL,
-  CONSTRAINT pk_cor PRIMARY KEY(numero),
+  CONSTRAINT pk_cor PRIMARY KEY(id),
   CONSTRAINT fk_veiculo_os FOREIGN KEY (veiculo_id) REFERENCES veiculos(id)
 ) engine = InnoDB;
 
@@ -100,6 +102,7 @@ CREATE TABLE servicos (
   descricao varchar(200) NOT NULL,
   valor decimal(10,2) NOT NULL,
   categoria ENUM('PEQUENO', 'MEDIO', 'GRANDE', 'MOTO', 'PADRAO') NOT NULL,
+  deleted_at TIMESTAMP,
   CONSTRAINT pk_servicos PRIMARY KEY(id)
 ) engine = InnoDB;
 
@@ -112,7 +115,7 @@ CREATE TABLE items_os (
   os_id int NOT NULL,
   CONSTRAINT pk_items_os PRIMARY KEY(id),
   CONSTRAINT fk_servico_items_os FOREIGN KEY (servico_id) REFERENCES servicos(id),
-  CONSTRAINT fk_os_items_os FOREIGN KEY (os_id) REFERENCES os(numero)
+  CONSTRAINT fk_os_items_os FOREIGN KEY (os_id) REFERENCES os(id)
 ) engine = InnoDB;
 
 

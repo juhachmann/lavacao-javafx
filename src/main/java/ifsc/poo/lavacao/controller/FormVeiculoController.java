@@ -1,37 +1,33 @@
 
 package ifsc.poo.lavacao.controller;
 
-import java.net.URL;
-import java.sql.Connection;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
-import java.util.ResourceBundle;
 
-import ifsc.poo.lavacao.model.dao.CorDAO;
-import ifsc.poo.lavacao.model.dao.MarcaDAO;
-import ifsc.poo.lavacao.model.dao.ModeloDAO;
-import ifsc.poo.lavacao.model.database.Database;
-import ifsc.poo.lavacao.model.database.DatabaseFactory;
+import ifsc.poo.lavacao.model.dao.VeiculoDAO;
 import ifsc.poo.lavacao.model.domain.Cor;
 import ifsc.poo.lavacao.model.domain.Marca;
 import ifsc.poo.lavacao.model.domain.Modelo;
 import ifsc.poo.lavacao.model.domain.Veiculo;
-import ifsc.poo.lavacao.utils.AlertDialog;
+import ifsc.poo.lavacao.service.CorService;
+import ifsc.poo.lavacao.service.MarcaService;
+import ifsc.poo.lavacao.service.ModeloService;
 import ifsc.poo.lavacao.utils.ValidacaoDeFormularioHelper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
-import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
-public class FormVeiculoController implements Initializable {
 
+public class FormVeiculoController extends FormController<Veiculo, VeiculoDAO> {
 
+    @FXML
+    private Button btnAdicionarModelo;
     @FXML
     private TextField inputPlaca;
     @FXML
@@ -40,37 +36,68 @@ public class FormVeiculoController implements Initializable {
     private ComboBox<Cor> selectCor;
     @FXML
     private ComboBox<Modelo> selectModelo;
-    public ComboBox<Marca> selectMarca;
+    @FXML
+    private ComboBox<Marca> selectMarca;
 
+    CorService corService = new CorService();
+    MarcaService marcaService = new MarcaService();
+    ModeloService modeloService = new ModeloService();
 
-    // Cores
-    // Ei, isto podiam ser serviços!
-    List<Cor> listaCores = new ArrayList<>();
-    ObservableList<Cor> observableListCores;
-    CorDAO corDAO = new CorDAO();
-
-    // Modelos
-    List<Modelo> listaModelos = new ArrayList<>();
-    ObservableList<Modelo> observableListModelos;
-    ModeloDAO modeloDAO = new ModeloDAO();
-
-    List<Marca> listaMarcas = new ArrayList<>();
-    ObservableList<Marca> observableListMarcas;
-    MarcaDAO marcaDAO = new MarcaDAO();
-
-    Database db = DatabaseFactory.getDatabase("mysql");
-    Connection conn;
-
-    Veiculo veiculo;
-    Stage stage;
-    boolean btnConfirmarClicked;
+    ObservableList<Modelo> observableListModelo;
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        loadMarcas();
+    protected void onInitializeAction() {
         loadCores();
+        loadMarcas();
+        loadModelos();
+        setComboBoxConvertersForCor();
+        setComboBoxConvertersForMarca();
+        setComboBoxConvertersForModelo();
+    }
 
-        selectModelo.setConverter(new StringConverter<Modelo>() {
+    @Override
+    protected VeiculoDAO getDAO() {
+        return new VeiculoDAO();
+    }
+
+    private void loadMarcas () {
+        List<Marca> listaMarcas = marcaService.getAll();
+        ObservableList<Marca> observableListMarcas = FXCollections.observableArrayList(listaMarcas);
+        selectMarca.setItems(observableListMarcas);
+    }
+
+    private void loadCores () {
+        List<Cor> listaCores = corService.getAll();
+        ObservableList<Cor> observableListCores = FXCollections.observableArrayList(listaCores);
+        selectCor.setItems(observableListCores);
+    }
+
+    private void loadModelos() {
+        if(selectMarca.getValue() == null) {
+            disableModelos();
+            return;
+        }
+        enabelModelos();
+        List<Modelo> listaModelos = modeloService.getByMarca(selectMarca.getValue());
+        observableListModelo = FXCollections.observableArrayList(listaModelos);
+        selectModelo.setItems(observableListModelo);
+    }
+
+    private void disableModelos() {
+        btnAdicionarModelo.setDisable(true);
+        selectModelo.setDisable(true);
+    }
+
+    private void enabelModelos() {
+        btnAdicionarModelo.setDisable(false);
+        selectModelo.setDisable(false);
+    }
+
+
+    // Que inferno de solução
+    // https://stackoverflow.com/questions/41634789/javafx-combobox-display-text-but-return-id-on-selection
+    private void setComboBoxConvertersForModelo() {
+        selectModelo.setConverter(new StringConverter<>() {
             @Override
             public String toString(Modelo modelo) {
                 if (modelo != null)
@@ -80,22 +107,12 @@ public class FormVeiculoController implements Initializable {
 
             @Override
             public Modelo fromString(String string) {
-                return selectModelo.getItems().stream().filter(modelo ->
-                        modelo.getDescricao().equals(string)).findFirst().orElse(null);
+                return selectModelo.getValue();
             }
         });
     }
 
-    private void loadMarcas () {
-        conn = db.conectar();
-        marcaDAO.setConnection(conn);
-        listaMarcas = marcaDAO.getAll();
-        db.desconectar(conn);
-        observableListMarcas = FXCollections.observableArrayList(listaMarcas);
-        selectMarca.setItems(observableListMarcas);
-
-        // Que inferno de solução
-        // https://stackoverflow.com/questions/41634789/javafx-combobox-display-text-but-return-id-on-selection
+    private void setComboBoxConvertersForMarca() {
         selectMarca.setConverter(new StringConverter<>() {
             @Override
             public String toString(Marca marca) {
@@ -109,19 +126,9 @@ public class FormVeiculoController implements Initializable {
                 return selectMarca.getValue();
             }
         });
-
     }
 
-    private void loadCores () {
-        conn = db.conectar();
-        corDAO.setConnection(conn);
-        listaCores = corDAO.getAll();
-        db.desconectar(conn);
-        observableListCores = FXCollections.observableArrayList(listaCores);
-        selectCor.setItems(observableListCores);
-
-        // Que inferno de solução
-        // https://stackoverflow.com/questions/41634789/javafx-combobox-display-text-but-return-id-on-selection
+    private void setComboBoxConvertersForCor() {
         selectCor.setConverter(new StringConverter<>() {
             @Override
             public String toString(Cor cor) {
@@ -136,81 +143,85 @@ public class FormVeiculoController implements Initializable {
                         cor.getNome().equals(string)).findFirst().orElse(null);
             }
         });
-
     }
 
-    private void loadModelos(Marca marca) {
-        conn = db.conectar();
-        modeloDAO.setConnection(conn);
-        listaModelos = modeloDAO.getByMarca(marca);
-        db.desconectar(conn);
-        observableListModelos = FXCollections.observableArrayList(listaModelos);
-        selectModelo.setItems(observableListModelos);
-    }
-    
-    @FXML
-    private void handleAdicionarModelo(ActionEvent event) {
-        // Abrir Dialog
-    }
 
-    @FXML
-    private void handleAdicionarCor(ActionEvent event) {
-        // Abrir Dialog
-    }
-
-    public void handleAdicionarMarca(ActionEvent actionEvent) {
-        // Abrir Dialog
-    }
-
-    @FXML
-    private void handleCancelar(ActionEvent event) {
-        stage.close();
-    }
-
-    @FXML
-    private void handleSalvar(ActionEvent event) {
-        if(dadosValidos()) {
-            veiculo.setCor(selectCor.getValue());
-            veiculo.setModelo(selectModelo.getValue());
-            veiculo.setPlaca(inputPlaca.getText());
-            veiculo.setObservacoes(inputObservacoes.getText());
-
-            btnConfirmarClicked = true;
-            stage.close();
-        }
-        else {
-            AlertDialog.exceptionMessage(new Exception("Há dados inválidos no seu formulário. Corrija e tente novamente!"));
+    @Override
+    protected void populateFieldsFromModel() {
+        inputPlaca.setText(model.getPlaca());
+        inputObservacoes.setText(model.getObservacoes());
+        selectCor.setValue(model.getCor());
+        if(model.getModelo() != null)
+            selectMarca.setValue(model.getModelo().getMarca());
+        if(selectMarca.getValue() != null) {
+            loadModelos();
+            selectModelo.setValue(model.getModelo());
         }
     }
 
-    private boolean dadosValidos() {
-        return ValidacaoDeFormularioHelper.validar(List.of(inputPlaca, inputObservacoes, selectCor, selectModelo));
+
+    @Override
+    protected boolean validarForm() {
+        return ValidacaoDeFormularioHelper.validar(
+                List.of(inputPlaca, inputObservacoes, selectCor, selectModelo));
     }
 
-    public void setVeiculo(Veiculo veiculo) {
-        this.veiculo = veiculo;
-        loadVeiculoData();
+    @Override
+    protected boolean buildModel() {
+        model.setPlaca(inputPlaca.getText());
+        model.setObservacoes(inputObservacoes.getText());
+        model.setModelo(selectModelo.getValue());
+        model.setCor(selectCor.getValue());
+        return true;
     }
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
+    @FXML
+    private void handleMarcaSelected(ActionEvent actionEvent) {
+        selectModelo.setValue(null);
+        loadModelos();
     }
 
-    private void loadVeiculoData() {
-        inputPlaca.setText(veiculo.getPlaca());
-        inputObservacoes.setText(veiculo.getObservacoes());
-        selectCor.setValue(veiculo.getCor());
-        selectModelo.setValue(veiculo.getModelo());
+
+    @FXML
+    private void handleAdicionarModelo(ActionEvent event) throws IOException {
+        if(selectMarca.getValue() == null) {
+            System.out.println("É preciso selecionar a marca primeiro");
+            return;
+        }
+        Modelo modelo = new Modelo();
+        modelo.setMarca(selectMarca.getValue());
+        DialogFormService<Modelo> service = new DialogFormService<>();
+        var controller = service.showAddFormAndWaitResponse("/view/FormModelo.fxml", modelo, "Cadastro de Modelo");
+        if(controller.isModelUpdated()) {
+            Modelo updated = controller.getModel();
+            selectModelo.getItems().add(updated);
+            selectModelo.setValue(updated);
+        }
     }
 
-    public boolean isBtnConfirmarClicked() {
-        return btnConfirmarClicked;
+    @FXML
+    private void handleAdicionarCor(ActionEvent event) throws IOException {
+        Cor cor = new Cor();
+        DialogFormService<Cor> service = new DialogFormService<>();
+        var controller = service.showAddFormAndWaitResponse("/view/FormCor.fxml", cor, "Cadastro de Cor");
+        if(controller.isModelUpdated()) {
+            Cor updated = controller.getModel();
+            selectCor.getItems().add(updated);
+            selectCor.setValue(updated);
+        }
     }
 
-    public void handleMarcaSelected(ActionEvent actionEvent) {
-        Marca marca = selectMarca.getValue();
-        if(marca != null) {
-            loadModelos(marca);
+    @FXML
+    private void handleAdicionarMarca(ActionEvent actionEvent) throws IOException {
+        Marca marca = new Marca();
+        DialogFormService<Marca> service = new DialogFormService<>();
+        var controller = service.showAddFormAndWaitResponse("/view/FormMarca.fxml", marca, "Cadastro de Marca");
+        if(controller.isModelUpdated()) {
+            Marca updated = controller.getModel();
+            selectMarca.getItems().add(updated);
+            selectMarca.setValue(updated);
+            loadModelos();
+            selectModelo.getSelectionModel().clearSelection();
         }
     }
 

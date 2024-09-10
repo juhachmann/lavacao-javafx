@@ -2,10 +2,8 @@ package ifsc.poo.lavacao.model.dao;
 
 import ifsc.poo.lavacao.model.domain.*;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -65,7 +63,7 @@ public class VeiculoDAO extends ACrudDAO<Veiculo> {
 
     @Override
     public List<Veiculo> getAll() {
-        String sql = "SELECT * FROM veiculos ;";
+        String sql = "SELECT * FROM veiculos WHERE deleted_at IS NULL ;";
         List<Veiculo> retorno = new ArrayList<>();
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -96,25 +94,39 @@ public class VeiculoDAO extends ACrudDAO<Veiculo> {
                 "  LEFT JOIN marcas mar ON mod.marca_id = mar.id " +
                 "  LEFT JOIN clientes c ON v.cliente_id = c.id " +
                 "WHERE " +
-                "  v.cliente_id = ? ;";
+                "  v.cliente_id = ? AND v.deleted_at IS NULL ;";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setInt(1, cliente.getId());
             ResultSet resultado = stmt.executeQuery();
             List<Veiculo> veiculos = new ArrayList<>();
             while (resultado.next()) {
+
                 Veiculo v = new Veiculo();
+                v.setId(resultado.getInt("id"));
                 v.setPlaca(resultado.getString("placa"));
+                v.setObservacoes(resultado.getString("observacoes"));
+
                 Marca marca = new Marca();
+                marca.setId(resultado.getInt("marca_id"));
                 marca.setNome(resultado.getString("marca_nome"));
+
                 Modelo modelo = new Modelo();
+                modelo.setId(resultado.getInt("modelo_id"));
                 modelo.setMarca(marca);
                 modelo.setDescricao(resultado.getString("descricao"));
                 modelo.setCategoria(ECategoria.valueOf(resultado.getString("categoria")));
                 v.setModelo(modelo);
+
                 Cor cor = new Cor();
+                cor.setId(resultado.getInt("id"));
                 cor.setNome(resultado.getString("cor_nome"));
                 v.setCor(cor);
+
+                Cliente c = new PessoaFisica();
+                c.setId(resultado.getInt("cliente_id"));
+                v.setCliente(c);
+
                 veiculos.add(v);
             }
             return veiculos;
@@ -136,7 +148,7 @@ public class VeiculoDAO extends ACrudDAO<Veiculo> {
             "LEFT JOIN cores cor ON v.cor_id = cor.id " +
             "LEFT JOIN modelos m ON v.modelo_id = m.id " +
             "LEFT JOIN marcas mar ON m.marca_id = mar.id " +
-            "WHERE v.id = ?;";
+            "WHERE v.id = ? AND v.deleted_at IS NULL ;";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setInt(1, id);
@@ -153,11 +165,11 @@ public class VeiculoDAO extends ACrudDAO<Veiculo> {
 
     public List<Veiculo> getByPlaca(String name) {
         String sql = "SELECT * FROM veiculos " +
-                "WHERE placa = ?;";
+                "WHERE placa LIKE ? AND deleted_at IS NULL ;";
         List<Veiculo> retorno = new ArrayList<>();
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setString(1, name);
+            stmt.setString(1, "%" + name + "%");
             ResultSet resultado = stmt.executeQuery();
             while (resultado.next()) {
                 retorno.add(populateVO(resultado));
@@ -172,10 +184,13 @@ public class VeiculoDAO extends ACrudDAO<Veiculo> {
 
     @Override
     public boolean delete(Veiculo veiculo) {
-        String sql = "DELETE FROM veiculos WHERE id = ?;";
+        String sql = "UPDATE veiculos SET deleted_at = ? WHERE id = ?;";
+        System.out.println("Entrei aqui pra deletar");
+        System.out.println(veiculo.getId());
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setInt(1, veiculo.getId());
+            stmt.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+            stmt.setInt(2, veiculo.getId());
             stmt.execute();
             return true;
         } catch (SQLException ex) {

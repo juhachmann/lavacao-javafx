@@ -5,12 +5,14 @@ import ifsc.poo.lavacao.model.domain.Servico;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-class ServicoDAO extends ACrudDAO<Servico> {
+public class ServicoDAO extends ACrudDAO<Servico> {
 
     @Override
     public Servico create(Servico servico) {
@@ -31,6 +33,38 @@ class ServicoDAO extends ACrudDAO<Servico> {
         } catch (SQLException ex) {
             Logger.getLogger(ServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
             return null;
+        }
+    }
+
+    public boolean create(List<Servico> servicos) {
+        String sql = "INSERT INTO servicos (descricao, valor, categoria) VALUES (?, ?, ?);";
+
+        try {
+            connection.setAutoCommit(false);
+
+            for(Servico s : servicos) {
+                PreparedStatement stmt = connection.prepareStatement(sql);
+                stmt.setString(1, s.getDescricao());
+                stmt.setDouble(2, s.getValor());
+                stmt.setString(3, s.getCategoria().getNome());
+                stmt.execute();
+            }
+
+            connection.commit();
+            connection.setAutoCommit(true);
+            return true;
+
+        } catch (SQLException ex) {
+            if (connection != null) {
+                try {
+                    connection.rollback();
+                    System.err.println("Transação falhou, rollback");
+                } catch (SQLException exc) {
+                    Logger.getLogger(ServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            Logger.getLogger(ServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
     }
 
@@ -57,7 +91,7 @@ class ServicoDAO extends ACrudDAO<Servico> {
 
     @Override
     public List<Servico> getAll() {
-        String sql = "SELECT * FROM servicos;";
+        String sql = "SELECT * FROM servicos WHERE deleted_at IS NULL;";
         List<Servico> retorno = new ArrayList<>();
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -74,7 +108,7 @@ class ServicoDAO extends ACrudDAO<Servico> {
 
     @Override
     public Servico getById(int id) {
-        String sql = "SELECT * FROM servicos WHERE id = ?;";
+        String sql = "SELECT * FROM servicos WHERE id = ? AND deleted_at IS NULL ;";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setInt(1, id);
@@ -88,9 +122,25 @@ class ServicoDAO extends ACrudDAO<Servico> {
         return null;
     }
 
+    public List<Servico> getByCategoria(ECategoria categoria) {
+        String sql = "SELECT * FROM servicos WHERE categoria = ? AND deleted_at IS NULL ;";
+        List<Servico> retorno = new ArrayList<>();
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, categoria.name());
+            ResultSet resultado = stmt.executeQuery();
+            while (resultado.next()) {
+                retorno.add(mapToServico(resultado));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return retorno;
+
+    }
 
     public List<Servico> getByName(String name) {
-        String sql = "SELECT * FROM servicos WHERE descricao LIKE ?;";
+        String sql = "SELECT * FROM servicos WHERE descricao LIKE ? AND deleted_at IS NULL ;";
         List<Servico> retorno = new ArrayList<>();
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -109,10 +159,11 @@ class ServicoDAO extends ACrudDAO<Servico> {
 
     @Override
     public boolean delete(Servico servico) {
-        String sql = "DELETE FROM servicos WHERE id = ?;";
+        String sql = "UPDATE servicos SET deleted_at = ? WHERE id = ?;";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setInt(1, servico.getId());
+            stmt.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+            stmt.setInt(2, servico.getId());
             stmt.execute();
             return true;
         } catch (SQLException ex) {
@@ -129,5 +180,6 @@ class ServicoDAO extends ACrudDAO<Servico> {
         servico.setValor(resultado.getDouble("valor"));
         return servico;
     }
+
 
 }

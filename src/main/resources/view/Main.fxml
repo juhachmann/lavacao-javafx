@@ -1,53 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-
-<BorderPane fx:id="mainPane" fx:controller="ifsc.poo.lavacao.controller.MainController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
-   <left>
-      <VBox alignment="CENTER" fillWidth="false" prefHeight="600.0" prefWidth="227.0" spacing="10.0" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
-         <children>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#showOSPane" prefHeight="101.0" prefWidth="247.0" text="Ordens de Serviço">
-               <font>
-                  <Font size="18.0" />
-               </font>
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
-            </Button>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#showClientesPane" prefHeight="101.0" prefWidth="247.0" text="Clientes">
-               <font>
-                  <Font size="18.0" />
-               </font>
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
-            </Button>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#showCadastrosPane" prefHeight="101.0" prefWidth="247.0" text="Cadastros">
-               <font>
-                  <Font size="18.0" />
-               </font>
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
-            </Button>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#showConfigPane" prefHeight="101.0" prefWidth="247.0" text="Configurações">
-               <font>
-                  <Font size="18.0" />
-               </font>
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
-            </Button>
-         </children>
-      </VBox>
-   </left>
+<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ifsc.poo.lavacao.controller.MainController">
    <center>
       <ImageView fitHeight="338.0" fitWidth="361.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
          <image>
@@ -55,4 +16,38 @@
          </image>
       </ImageView>
    </center>
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="Ordens de Serviço">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#showOSForm" text="Nova" />
+                  <MenuItem mnemonicParsing="false" onAction="#showOSPane" text="Ver Todas" />
+               </items></Menu>
+          <Menu mnemonicParsing="false" onAction="#showClientesPane" text="Clientes">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#showClientesPane" text="Ver Clientes" />
+               </items></Menu>
+          <Menu mnemonicParsing="false" text="Outros Cadastros">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#showCoresPane" text="Cores" />
+                  <MenuItem mnemonicParsing="false" onAction="#showMarcasPane" text="Marcas" />
+                  <MenuItem mnemonicParsing="false" onAction="#showModelosPane" text="Modelos" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="Admin">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#showServicosPane" text="Gerenciar Serviços" />
+                  <MenuItem mnemonicParsing="false" text="Configurações" />
+              </items>
+            </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <left>
+      <VBox prefHeight="575.0" prefWidth="118.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <VBox prefHeight="575.0" prefWidth="125.0" BorderPane.alignment="CENTER" />
+   </right>
 </BorderPane>

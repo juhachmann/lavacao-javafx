@@ -4,18 +4,10 @@ package ifsc.poo.lavacao.model.domain;
 public class Veiculo {
 
     private int id;
-
     private String placa;
-
     private String observacoes;
-
-
     private Modelo modelo;
-
-
     private Cor cor;
-
-
     private Cliente cliente;
 
     public Veiculo() {}
@@ -81,6 +73,18 @@ public class Veiculo {
         this.cliente = cliente;
     }
 
+
+    @Override
+    public String toString() {
+        return "Veiculo{" +
+                "id=" + id +
+                ", placa='" + placa + '\'' +
+                ", observacoes='" + observacoes + '\'' +
+                ", modelo=" + modelo +
+                ", cor=" + cor +
+                ", cliente=" + cliente +
+                '}';
+    }
 
     public static class VeiculoBuilder {
 

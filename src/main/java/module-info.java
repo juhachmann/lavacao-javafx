@@ -9,4 +9,5 @@ module Main {
     opens ifsc.poo.lavacao.controller to javafx.fxml;
     opens ifsc.poo.lavacao.model.domain to javafx.base;
     exports ifsc.poo.lavacao;
+    opens ifsc.poo.lavacao.service to javafx.fxml;
 }

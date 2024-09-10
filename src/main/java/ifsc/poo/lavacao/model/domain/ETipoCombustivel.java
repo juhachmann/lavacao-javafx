@@ -2,12 +2,12 @@ package ifsc.poo.lavacao.model.domain;
 
 public enum ETipoCombustivel {
 
-    GAS("Gasolina"),
-    ETHANOL("Etanol"),
+    GASOLINA("Gasolina"),
+    ETANOL("Etanol"),
     FLEX("Flex"),
     DIESEL("Diesel"),
     GNV("GNV"),
-    OTHER("Outro");
+    OUTRO("Outro");
 
     private String nome;
 

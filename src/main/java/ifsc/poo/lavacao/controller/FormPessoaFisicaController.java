@@ -1,8 +1,8 @@
 
 package ifsc.poo.lavacao.controller;
 
+import ifsc.poo.lavacao.model.dao.ClienteDAO;
 import ifsc.poo.lavacao.model.domain.PessoaFisica;
-import ifsc.poo.lavacao.utils.FormatadorDeTextoBuilder;
 import ifsc.poo.lavacao.utils.Regex;
 import ifsc.poo.lavacao.utils.ValidacaoDeFormularioHelper;
 import javafx.fxml.FXML;
@@ -11,12 +11,10 @@ import javafx.scene.control.Control;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
-import java.net.URL;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 
-public class FormPessoaFisicaController extends DialogController<PessoaFisica> {
+public class FormPessoaFisicaController extends FormClienteController<PessoaFisica> {
 
     @FXML
     private TextField inputNome;
@@ -28,21 +26,32 @@ public class FormPessoaFisicaController extends DialogController<PessoaFisica> {
     private TextField inputEmail;
     @FXML
     private TextField inputTelefone;
+
     @FXML
     private Button btnSalvar;
 
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-    }
 
     @Override
-    protected void populateForm() {
+    protected void populateFieldsFromModel() {
         inputNome.setText(model.getNome());
         inputEmail.setText(model.getEmail());
         inputTelefone.setText(model.getCelular());
-        inputCPF.setText(model.getCpf());
-        inputDataNascimento.setValue(model.getDataNascimento());
+        if(model instanceof PessoaFisica pf) {
+            inputCPF.setText(pf.getCpf());
+            inputDataNascimento.setValue(pf.getDataNascimento());
+        }
+
+    }
+
+    @Override
+    protected void onInitializeAction() {
+
+    }
+
+    @Override
+    protected ClienteDAO getDAO() {
+        return new ClienteDAO();
     }
 
 
@@ -61,8 +70,11 @@ public class FormPessoaFisicaController extends DialogController<PessoaFisica> {
         model.setCelular(inputTelefone.getText());
         model.setEmail(inputEmail.getText());
         model.setNome(inputNome.getText());
-        model.setCpf(inputCPF.getText());
-        model.setDataNascimento(inputDataNascimento.getValue());
+        if (model instanceof PessoaFisica pf) {
+            pf.setCpf(inputCPF.getText());
+            pf.setDataNascimento(inputDataNascimento.getValue());
+        }
+
         return true;
     }
 

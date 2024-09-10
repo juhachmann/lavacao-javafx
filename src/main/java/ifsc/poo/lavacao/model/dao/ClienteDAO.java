@@ -4,6 +4,7 @@ import ifsc.poo.lavacao.model.domain.*;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -193,7 +194,8 @@ public class ClienteDAO extends ACrudDAO<Cliente> {
         String sql = "SELECT * FROM clientes c " +
                 "LEFT JOIN pessoa_fisica pf ON c.id = pf.cliente_id " +
                 "LEFT JOIN pessoa_juridica pj ON c.id = pj.cliente_id " +
-                "LEFT JOIN pontuacao pt ON c.id = pt.cliente_id;";
+                "LEFT JOIN pontuacao pt ON c.id = pt.cliente_id " +
+                "WHERE c.deleted_at IS NULL;";
         List<Cliente> retorno = new ArrayList<>();
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -214,7 +216,7 @@ public class ClienteDAO extends ACrudDAO<Cliente> {
                 "LEFT JOIN pessoa_fisica pf ON c.id = pf.cliente_id " +
                 "LEFT JOIN pessoa_juridica pj ON c.id = pj.cliente_id " +
                 "LEFT JOIN pontuacao pt ON c.id = pt.cliente_id " +
-                "WHERE c.id = ?;";
+                "WHERE c.id = ? AND c.deleted_at IS NULL ;";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setInt(1, id);
@@ -234,7 +236,7 @@ public class ClienteDAO extends ACrudDAO<Cliente> {
                 "LEFT JOIN pessoa_fisica pf ON c.id = pf.cliente_id " +
                 "LEFT JOIN pessoa_juridica pj ON c.id = pj.cliente_id " +
                 "LEFT JOIN pontuacao pt ON c.id = pt.cliente_id " +
-                "WHERE c.nome LIKE ?;";
+                "WHERE c.nome LIKE ? AND c.deleted_at IS NULL ;";
         List<Cliente> retorno = new ArrayList<>();
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -249,16 +251,17 @@ public class ClienteDAO extends ACrudDAO<Cliente> {
         return retorno;
     }
 
-    public List<Cliente> getByCPF(String cpf) {
+    public List<Cliente> getByDocument(String doc) {
         String sql = "SELECT * FROM clientes c " +
                 "LEFT JOIN pessoa_fisica pf ON c.id = pf.cliente_id " +
                 "LEFT JOIN pessoa_juridica pj ON c.id = pj.cliente_id " +
                 "LEFT JOIN pontuacao pt ON c.id = pt.cliente_id " +
-                "WHERE pf.cpf = ?;";
+                "WHERE (pf.cpf = ? OR pj.cnpj = ?) AND c.deleted_at IS NULL ;";
         List<Cliente> retorno = new ArrayList<>();
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setString(1, cpf);
+            stmt.setString(1, doc);
+            stmt.setString(2, doc);
             ResultSet resultado = stmt.executeQuery();
             while (resultado.next()) {
                 retorno.add(populateVOFull(resultado));
@@ -269,33 +272,15 @@ public class ClienteDAO extends ACrudDAO<Cliente> {
         return retorno;
     }
 
-    public List<Cliente> getByCNPJ(String cnpj) {
-        String sql = "SELECT * FROM clientes c " +
-                "LEFT JOIN pessoa_fisica pf ON c.id = pf.cliente_id " +
-                "LEFT JOIN pessoa_juridica pj ON c.id = pj.cliente_id " +
-                "LEFT JOIN pontuacao pt ON c.id = pt.cliente_id " +
-                "WHERE pj.cnpj = ?;";
-        List<Cliente> retorno = new ArrayList<>();
-        try {
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setString(1, cnpj);
-            ResultSet resultado = stmt.executeQuery();
-            while (resultado.next()) {
-                retorno.add(populateVOFull(resultado));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return retorno;
-    }
-    
+
 
     @Override
     public boolean delete(Cliente cliente) {
-        String sql = "DELETE FROM clientes WHERE id = ?;";
+        String sql = "UPDATE clientes SET deleted_at = ? WHERE id = ?;";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setInt(1, cliente.getId());
+            stmt.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+            stmt.setInt(2, cliente.getId());
             stmt.execute();
             return true;
         } catch (SQLException ex) {

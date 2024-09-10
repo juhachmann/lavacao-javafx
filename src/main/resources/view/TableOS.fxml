@@ -13,8 +13,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ifsc.poo.lavacao.controller.OSController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ifsc.poo.lavacao.controller.TableOSController">
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
    </padding>
@@ -24,13 +25,17 @@
    <children>
       <VBox layoutX="34.0" layoutY="39.0" prefHeight="517.0" prefWidth="730.0" spacing="10.0" styleClass="sc-vbox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label prefHeight="49.0" prefWidth="771.0" styleClass="sc-title" text="Ordens de Serviço" />
-            <HBox prefHeight="34.0" prefWidth="760.0" spacing="10.0">
+            <AnchorPane prefHeight="48.0" prefWidth="760.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#showCadastroOS" prefHeight="58.0" prefWidth="125.0" text="Novo" />
+                  <Label layoutX="77.0" layoutY="41.0" prefHeight="45.0" prefWidth="456.0" styleClass="sc-title" text="Ordens de Serviço" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="650.0" layoutY="7.0" mnemonicParsing="false" onAction="#handleAdicionar" prefHeight="32.0" prefWidth="104.0" text="Adicionar" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="7.0" />
                </children>
-            </HBox>
-            <Label prefHeight="33.0" prefWidth="760.0" />
+            </AnchorPane>
+            <Label prefHeight="20.0" prefWidth="760.0" />
             <HBox prefHeight="37.0" prefWidth="760.0" spacing="10.0">
                <children>
                   <GridPane alignment="CENTER" hgap="10.0" prefHeight="34.0" prefWidth="674.0" HBox.hgrow="SOMETIMES">
@@ -48,17 +53,23 @@
                         <DatePicker fx:id="buscaData" prefHeight="37.0" prefWidth="513.0" promptText="Busca por Data" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" />
                      </children>
                   </GridPane>
-                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#buscarCliente" prefHeight="48.0" prefWidth="80.0" text="Buscar" textAlignment="CENTER" />
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#buscarOS" prefHeight="48.0" prefWidth="80.0" text="Buscar" textAlignment="CENTER" />
                </children>
             </HBox>
-            <TableView prefHeight="330.0" prefWidth="730.0">
+            <TableView fx:id="tableView" prefHeight="403.0" prefWidth="760.0" VBox.vgrow="ALWAYS">
               <columns>
-                <TableColumn prefWidth="36.00000762939453" text="#" />
-                <TableColumn prefWidth="691.9999923706055" text="C2" />
+                <TableColumn fx:id="id" maxWidth="30.0" prefWidth="36.00000762939453" text="#" />
+                <TableColumn fx:id="veiculo" prefWidth="157.0" text="Veículo (placa)" />
+                  <TableColumn fx:id="data" prefWidth="110.0" text="Data" />
+                  <TableColumn fx:id="total" prefWidth="126.0" text="Total" />
+                  <TableColumn fx:id="status" prefWidth="110.0" text="Status" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
             </TableView>
          </children>
       </VBox>

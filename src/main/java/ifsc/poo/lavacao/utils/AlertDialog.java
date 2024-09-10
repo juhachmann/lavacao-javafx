@@ -30,7 +30,7 @@ public class AlertDialog {
         alert.setTitle("Ooops, houve um erro!");
         alert.setHeaderText(ex.getMessage());
         try {
-            alert.setContentText("Detalhes: \n" + ex.getCause().toString());
+            alert.setContentText("Detalhes: \n" + ex.getCause());
         } finally {
             alert.show();
         }
