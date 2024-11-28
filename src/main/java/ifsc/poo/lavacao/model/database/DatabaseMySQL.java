@@ -14,7 +14,7 @@ public class DatabaseMySQL implements Database {
     public Connection conectar() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            this.connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1/lavacao", "root","root");
+            this.connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1/lavacao", "admin","admin");
             return this.connection;
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(DatabaseMySQL.class.getName()).log(Level.SEVERE, null, ex);

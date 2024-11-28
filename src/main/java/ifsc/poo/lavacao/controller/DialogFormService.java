@@ -6,6 +6,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
@@ -24,7 +25,8 @@ public class DialogFormService<T> {
         scrollPane.setPannable(true);
         scrollPane.setContent(page);
         Stage dialogStage = new Stage();
-        dialogStage.setTitle(title);
+        dialogStage.initStyle(StageStyle.UNDECORATED);
+        //dialogStage.setTitle(title);
 
         Scene scene = new Scene(scrollPane);
         dialogStage.setScene(scene);

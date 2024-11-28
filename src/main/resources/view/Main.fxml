@@ -1,53 +1,125 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
-
 <BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ifsc.poo.lavacao.controller.MainController">
-   <center>
-      <ImageView fitHeight="338.0" fitWidth="361.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
-         <image>
-            <Image url="@../img/main-image.png" />
-         </image>
-      </ImageView>
-   </center>
-   <top>
-      <MenuBar BorderPane.alignment="CENTER">
-        <menus>
-          <Menu mnemonicParsing="false" text="Ordens de Serviço">
-               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#showOSForm" text="Nova" />
-                  <MenuItem mnemonicParsing="false" onAction="#showOSPane" text="Ver Todas" />
-               </items></Menu>
-          <Menu mnemonicParsing="false" onAction="#showClientesPane" text="Clientes">
-               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#showClientesPane" text="Ver Clientes" />
-               </items></Menu>
-          <Menu mnemonicParsing="false" text="Outros Cadastros">
-            <items>
-              <MenuItem mnemonicParsing="false" onAction="#showCoresPane" text="Cores" />
-                  <MenuItem mnemonicParsing="false" onAction="#showMarcasPane" text="Marcas" />
-                  <MenuItem mnemonicParsing="false" onAction="#showModelosPane" text="Modelos" />
-            </items>
-          </Menu>
-            <Menu mnemonicParsing="false" text="Admin">
-              <items>
-                <MenuItem mnemonicParsing="false" onAction="#showServicosPane" text="Gerenciar Serviços" />
-                  <MenuItem mnemonicParsing="false" text="Configurações" />
-              </items>
-            </Menu>
-        </menus>
-      </MenuBar>
-   </top>
-   <left>
+    <top>
+        <VBox prefHeight="72.0" prefWidth="800.0" style="-fx-background-color: #4c84cc;" BorderPane.alignment="CENTER">
+                <HBox alignment="CENTER" prefHeight="45.0" prefWidth="800.0" spacing="10.0" VBox.vgrow="ALWAYS">
+                    <ImageView fitHeight="128.0" fitWidth="128.0" layoutX="34.0" layoutY="90.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../img/main-image.png" />
+                    </ImageView>
+                    <Text strokeType="OUTSIDE" fill="white" strokeWidth="0.0" text="A1A - Car Wash" HBox.hgrow="ALWAYS">
+                        <font>
+                            <Font size="20.0" />
+                        </font>
+                    </Text>
+                    <HBox alignment="TOP_RIGHT" prefHeight="45.0" prefWidth="800.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                        <FontIcon iconLiteral="mdi2w-window-minimize" onMouseClicked="#minimize" />
+                        <FontIcon fx:id="maximizeIcon" onMouseClicked="#maximize" />
+                        <FontIcon iconLiteral="mdi2w-window-close" onMouseClicked="#exit" />
+                        <padding>
+                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        </padding>
+                    </HBox>
+                    <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </padding>
+                </HBox>
+                <MenuBar>
+                    <menus>
+                        <Menu mnemonicParsing="false" text="Ordens de Serviço">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#showOSForm" text="Criar OS">
+                                    <graphic>
+                                        <FontIcon iconLiteral="mdi2c-card-bulleted-outline" />
+                                    </graphic>
+                                </MenuItem>
+                                <MenuItem mnemonicParsing="false" onAction="#showOSPane" text="Histórico de OS">
+                                    <graphic>
+                                        <FontIcon iconLiteral="mdi2o-order-bool-descending" />
+                                    </graphic>
+                                </MenuItem>
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" onAction="#showClientesPane" text="Cadastro de Clientes">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#showClientesPane" text="Clientes">
+                                    <graphic>
+                                        <FontIcon iconLiteral="mdi2f-folder-account-outline" />
+                                    </graphic>
+                                </MenuItem>
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Cadastros Secundários">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#showCoresPane" text="Cadastro de Cores">
+                                    <graphic>
+                                        <FontIcon iconLiteral="mdi2f-format-color-fill" />
+                                    </graphic>
+                                </MenuItem>
+                                <MenuItem mnemonicParsing="false" onAction="#showMarcasPane" text="Cadastro de Marcas">
+                                    <graphic>
+                                        <FontIcon iconLiteral="mdi2t-tag-multiple-outline" />
+                                    </graphic>
+                                </MenuItem>
+                                <MenuItem mnemonicParsing="false" onAction="#showModelosPane" text="Cadastro de Modelos">
+                                    <graphic>
+                                        <FontIcon iconLiteral="mdi2c-car" />
+                                    </graphic>
+                                </MenuItem>
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Área de Administrador">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#showServicosPane" text="Gerenciar Serviços">
+                                    <graphic>
+                                        <FontIcon iconLiteral="mdi2c-car-wash" />
+                                    </graphic>
+                                </MenuItem>
+                                <MenuItem mnemonicParsing="false" text="Configurações">
+                                    <graphic>
+                                        <FontIcon iconLiteral="mdi2t-tools" />
+                                    </graphic>
+                                </MenuItem>
+                            </items>
+                        </Menu>
+                    </menus>
+                </MenuBar>
+        </VBox>
+    </top>
+    <left>
       <VBox prefHeight="575.0" prefWidth="118.0" BorderPane.alignment="CENTER" />
    </left>
    <right>
       <VBox prefHeight="575.0" prefWidth="125.0" BorderPane.alignment="CENTER" />
    </right>
+    <center>
+        <fx:include source="TableOS.fxml" />
+    </center>
+   <bottom>
+      <VBox prefHeight="32.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+            <Separator prefWidth="200.0" />
+            <Label fx:id="loggedUser">
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
+            </Label>
+      </VBox>
+   </bottom>
+
 </BorderPane>
