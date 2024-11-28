@@ -2,9 +2,11 @@
 
 Um sistema Desktop para gerenciamento de uma Lavação de Carros. Cadastre seus clientes e gerencie suas Ordens de Serviço!
 
+![Tela de Login](/docs/login.png "Login")
+
+![Tela principal da aplicação](/docs/tela2.png "Telas principais")
+
 ## Recursos
-- Interface de usuário ainda "crua", mas funcional
-- CRUD de cores, marcas, modelos e serviços da Lavação
 - Gerenciamento de Clientes e seus veículos
 - Gerenciamento de Ordens de Serviço
 
@@ -68,13 +70,9 @@ A aplicação é o resultado de um exercício de aprendizagem em que praticamos:
 - Conceitos básicos de POO (herança, polimorfismo e encapsulamento)
 - Modelagem de classes (tipos de relacionamento e multiplicidade)
 - POO com Java (modificadores de acesso, tipos de classes, tipos de atributos, exceções na linguagem Java)
--  Padrão DAO e arquitetura MVC
-- Construção de interfaces gráficas com JavaFX
-
-Como exercício, também buscamos experimentar o uso de:
-- Interfaces
-- Classes parametrizadas
-- Padrão *Template Method*
+- Padrão DAO e arquitetura MVC
+- Interfaces gráficas com JavaFX
+- Recursos intermediários em Java (interfaces, classes parametrizadas, padrões de Design)
   
 ### Créditos
 Modelagem de classes, requisitos, protótipos de telas: [Prof. Marcos Pisching](https://github.com/mpisching)
