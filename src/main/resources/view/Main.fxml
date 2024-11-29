@@ -44,12 +44,12 @@
                     <menus>
                         <Menu mnemonicParsing="false" text="Ordens de Serviço">
                             <items>
-                                <MenuItem mnemonicParsing="false" onAction="#showOSForm" text="Criar OS">
+                                <MenuItem fx:id="createOS" mnemonicParsing="false" text="Criar OS">
                                     <graphic>
                                         <FontIcon iconLiteral="mdi2c-card-bulleted-outline" />
                                     </graphic>
                                 </MenuItem>
-                                <MenuItem mnemonicParsing="false" onAction="#showOSPane" text="Histórico de OS">
+                                <MenuItem mnemonicParsing="false" fx:id="showAllOS" text="Histórico de OS">
                                     <graphic>
                                         <FontIcon iconLiteral="mdi2o-order-bool-descending" />
                                     </graphic>
@@ -58,7 +58,7 @@
                         </Menu>
                         <Menu mnemonicParsing="false" onAction="#showClientesPane" text="Cadastro de Clientes">
                             <items>
-                                <MenuItem mnemonicParsing="false" onAction="#showClientesPane" text="Clientes">
+                                <MenuItem mnemonicParsing="false" fx:id="showAllClients" text="Clientes">
                                     <graphic>
                                         <FontIcon iconLiteral="mdi2f-folder-account-outline" />
                                     </graphic>
@@ -67,17 +67,17 @@
                         </Menu>
                         <Menu mnemonicParsing="false" text="Cadastros Secundários">
                             <items>
-                                <MenuItem mnemonicParsing="false" onAction="#showCoresPane" text="Cadastro de Cores">
+                                <MenuItem mnemonicParsing="false" fx:id="showAllColors" text="Cadastro de Cores">
                                     <graphic>
                                         <FontIcon iconLiteral="mdi2f-format-color-fill" />
                                     </graphic>
                                 </MenuItem>
-                                <MenuItem mnemonicParsing="false" onAction="#showMarcasPane" text="Cadastro de Marcas">
+                                <MenuItem mnemonicParsing="false" fx:id="showAllBrands" text="Cadastro de Marcas">
                                     <graphic>
                                         <FontIcon iconLiteral="mdi2t-tag-multiple-outline" />
                                     </graphic>
                                 </MenuItem>
-                                <MenuItem mnemonicParsing="false" onAction="#showModelosPane" text="Cadastro de Modelos">
+                                <MenuItem mnemonicParsing="false" fx:id="showAllModels" text="Cadastro de Modelos">
                                     <graphic>
                                         <FontIcon iconLiteral="mdi2c-car" />
                                     </graphic>
@@ -86,7 +86,7 @@
                         </Menu>
                         <Menu mnemonicParsing="false" text="Área de Administrador">
                             <items>
-                                <MenuItem mnemonicParsing="false" onAction="#showServicosPane" text="Gerenciar Serviços">
+                                <MenuItem mnemonicParsing="false" fx:id="showAllServices" text="Gerenciar Serviços">
                                     <graphic>
                                         <FontIcon iconLiteral="mdi2c-car-wash" />
                                     </graphic>
